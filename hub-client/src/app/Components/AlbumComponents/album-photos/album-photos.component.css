@@ -1,0 +1,13 @@
+.container{
+    max-height: 50vh;
+    max-width: 90vw;
+    display: flexbox;
+    overflow-y: hidden;
+}
+
+.image-gallery {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }

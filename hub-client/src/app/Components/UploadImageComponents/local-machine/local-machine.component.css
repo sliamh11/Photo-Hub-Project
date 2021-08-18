@@ -1,0 +1,24 @@
+.main-grid{
+    display: grid;
+    grid-template-rows: 15vh 55vh;
+    overflow: hidden;
+}
+
+.container{
+    display: flex;
+}
+
+.center{
+    justify-content: center;
+    align-items: center;
+}
+
+.top{
+    justify-content: center;
+    align-items: baseline;
+}
+
+.container > img{
+    max-height: 55vh;
+    max-width: 65vw;
+}

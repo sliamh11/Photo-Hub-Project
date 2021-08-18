@@ -1,0 +1,26 @@
+<div>
+    <div class="container center">
+        <video class="image-container" #video id="video" [width]="VIDEO_WIDTH" [height]="VIDEO_HEIGHT" autoplay></video>
+    </div>
+
+    <div id="button-container" class="container center" cdkDrag>
+        <button class="btn" cdkDragHandle mat-raised-button (click)="capture()">
+            <span>Capture </span>
+            <mat-icon>center_focus_strong</mat-icon>
+        </button>
+    </div>
+    
+    <canvas #canvas [class.hide]="true" id="canvas" [width]="VIDEO_WIDTH" [height]="VIDEO_HEIGHT"></canvas>
+
+    <div class="container center">
+        <div class="gallery">
+            <ul class="container left-right">
+                <li *ngFor="let c of captures">
+                    <div class="image-container" (click)="imageClicked($event)">
+                        <img id="{{ c.id }}" class="image" src="{{ c.url }}" height="125">
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

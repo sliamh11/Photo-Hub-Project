@@ -1,0 +1,35 @@
+.Grid{
+    display: grid;
+    width: 100vw;
+    height: 90vh;
+    grid-template-columns: 48vw 1fr 48vw;
+    grid-template-rows:2fr 1fr;
+}
+
+.form-container{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 15vw;
+    padding-right:25%;
+    flex-direction: column;
+    gap: var(--gap);
+}
+
+.mat-divider{
+    justify-self: center;
+    align-items: center;
+    margin-top:15vh;
+}
+
+.mat-checkbox{
+    margin:5px;
+    left: 0px;
+}
+
+.btn{
+    margin-top:5rem;
+    height:3rem;
+    width: 6rem;
+}
+

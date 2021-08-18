@@ -1,0 +1,6 @@
+.main-grid{
+    display: grid;
+    height: 90vh;
+    width: 100vw;
+    grid-template-rows: 15vh 55vh;
+}

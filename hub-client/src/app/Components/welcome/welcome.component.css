@@ -1,0 +1,5 @@
+.welcomeMsg{
+    text-align: center;
+    font-size: 7vw;
+    text-overflow: ellipsis;
+}

@@ -1,0 +1,70 @@
+.main-grid{
+    display: grid;
+    grid-template-rows: 50vh 10vh;
+}
+
+.container{
+    display: flex;
+}
+
+.center{
+    align-items: center;
+    justify-content: center;
+}
+
+.left-right{
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.mat-icon{
+    align-self:flex-start;
+}
+
+.btn{
+    background-color: rgba(0, 0, 0, 0.637);
+    color:rgb(206, 201, 201);
+}
+
+#button-container{
+    position:absolute;
+    left:30%;
+    top:30%;
+}
+
+#canvas{
+    display: none;
+}
+
+li{
+    display: inline;
+    flex-direction: row;
+    padding-left: 10px;
+}
+
+.gallery{
+    width: 50vw;
+    height: 23vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.image-container :hover:active{
+    opacity: 0.8;
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.image-container{
+    position: sticky;
+}
+
+.image-container :hover{
+    padding:5px;
+    display: inherit;
+    border: black;
+    border-radius: 3px;
+    border-width: 2px;
+    border-style: groove;
+    cursor: pointer;
+}

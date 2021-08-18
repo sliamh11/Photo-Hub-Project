@@ -1,0 +1,19 @@
+.main-grid{
+    display: grid;
+    grid-template-rows: 75vh 15vh;
+    overflow: hidden;
+}
+
+.container{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.btn{
+    width:10rem;
+    height:2rem;
+    align-self: center;
+    justify-self: center;
+    margin: 5vh 5vw;
+}

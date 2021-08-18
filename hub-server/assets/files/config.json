@@ -1,0 +1,11 @@
+{
+    "selectedView": {
+        "id": 1,
+        "name": "Grid"
+    },
+    "albumName": "My Album",
+    "allowPrivateMode": true,
+    "allowLocation": true,
+    "allowCamera": true,
+    "privatePassword": "123"
+}

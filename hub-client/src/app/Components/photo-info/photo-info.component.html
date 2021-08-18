@@ -1,0 +1,27 @@
+<div class="main-grid">
+    <div class="center">
+
+        <mat-form-field appearance="fill">
+            <mat-label>Caption</mat-label>
+            <input matInput [(ngModel)]="photoModel.caption" placeholder="Enter Caption" >
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Categories</mat-label>
+            <mat-select [(value)]="photoModel.categories" multiple>
+                <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill">
+            <mat-label>Location</mat-label>
+            <input matInput [(ngModel)]="photoModel.location" placeholder="Enter Location">
+        </mat-form-field>
+
+            <mat-checkbox [(ngModel)]="photoModel.isFavorite">Favorite</mat-checkbox>
+            <mat-checkbox [(ngModel)]="photoModel.isPrivate">Private</mat-checkbox>
+    </div>
+    <div class="center">
+        <button mat-raised-button color="primary" (click)="handleClickNext()">Next</button>
+    </div>
+</div>

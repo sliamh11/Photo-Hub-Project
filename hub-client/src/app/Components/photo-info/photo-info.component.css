@@ -1,0 +1,18 @@
+.main-grid{
+    display: grid;
+    height: 90vh;
+    width:100vw;
+    grid-template-rows: 70vh 20vh;
+}
+
+.main-grid :nth-child(1){
+    flex-direction: column;
+    gap: var(--gap);
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

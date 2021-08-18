@@ -1,0 +1,13 @@
+.main-grid{
+    display: grid;
+    grid-template-rows: 30vh 50vh 5vh;
+}
+
+.container{
+    display: flex;
+}
+
+.center{
+  align-items: center;
+  justify-content: center;  
+}

@@ -1,0 +1,20 @@
+<div class="main-grid">
+    <div>
+        <mat-tab-group mat-align-tabs="start">
+            <mat-tab label="Camera">
+                <app-camera></app-camera>
+            </mat-tab>
+            <mat-tab label="Local Machine">
+                <app-local-machine></app-local-machine>
+            </mat-tab>
+            <mat-tab label="Online Image">
+                <app-online-image></app-online-image>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+    <div class="container">
+        <button class="btn" mat-raised-button color="primary" (click)="handleClickDone()">Done</button>
+    </div>
+
+</div>

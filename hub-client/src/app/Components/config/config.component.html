@@ -1,0 +1,44 @@
+<div class="Grid">
+    <!-- Left Form -->
+    <div class="form-container">
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>New Album Name</mat-label>
+                <input [(ngModel)]="albumName" type="text" matInput placeholder="Name">
+                <mat-icon matSuffix>create_new_folder</mat-icon>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Select</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let view of viewsList" [value]="view.id" (click)="handleViewSelected(view.id)" > {{view.name}} </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <!-- Material Divider -->
+    <mat-divider [vertical]="true"></mat-divider>
+
+    <!-- Right Form -->
+    <div class="form-container">
+        <mat-checkbox [(ngModel)]="allowCamera">Allow device camera</mat-checkbox>
+        <mat-checkbox [(ngModel)]="allowLocation">Allow device location</mat-checkbox>
+        <mat-checkbox [(ngModel)]="allowPrivateMode">Allow private mode</mat-checkbox>
+
+        <div *ngIf="allowPrivateMode === true">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter your password</mat-label>
+                <input [(ngModel)]="privatePassword" matInput [type]="hide ? 'password' : 'text'">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div></div>
+    <button class="btn" mat-raised-button color="primary" (click)="handleClickNext()">Next</button>
+</div>
