@@ -10,14 +10,16 @@ import { ErrorHandlerService } from '../ErrorHandler/error-handler.service';
 })
 export class ConfigService {
 
-  URL = "http://localhost:5000/api/config";
+  // URLs
+  CONFIG_URL = "http://localhost:5000/api/config";
+  PHOTOS_URL = "http://localhost:5000/api/photos";
 
   constructor(private httpClient: HttpClient, private errorService : ErrorHandlerService) {
   }
 
   async isConfigDataExists() {
     try {
-      return await this.httpClient.get(`${this.URL}/is-data-exists`).toPromise();
+      return await this.httpClient.get(`${this.CONFIG_URL}/is-data-exists`).toPromise();
     } catch (error) {
       throw this.errorService.handleError(error);
     }
@@ -25,7 +27,7 @@ export class ConfigService {
 
   async getViewsList() {
     try {
-      return await this.httpClient.get<View[]>(`${this.URL}/views`).toPromise();
+      return await this.httpClient.get<View[]>(`${this.CONFIG_URL}/views`).toPromise();
     } catch (error) {
       throw this.errorService.handleError(error);
     }
@@ -33,7 +35,7 @@ export class ConfigService {
 
   async getCategories() {
     try {
-      return await this.httpClient.get<Category[]>(`${this.URL}/categories`).toPromise();
+      return await this.httpClient.get<Category[]>(`${this.CONFIG_URL}/categories`).toPromise();
     } catch (error) {
       throw this.errorService.handleError(error);
     }
@@ -41,7 +43,7 @@ export class ConfigService {
 
   async postConfiguration(config: ConfigModel) {
     try {
-      return await this.httpClient.post(`${this.URL}`, config).toPromise();
+      return await this.httpClient.post(`${this.CONFIG_URL}`, config).toPromise();
     } catch (error) {
       throw this.errorService.handleError(error);
     }

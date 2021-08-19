@@ -49,12 +49,8 @@ class FilesService {
         try {
             return new Promise(async (res, rej) => {
                 if (await this.isFileExistAsync(filePath)) {
-                    fs.readFile(filePath, {encoding: "utf8"}, (err, data) => {
-                        if (err) {
-                            return rej(err);
-                        } else {
-                            return res(data);
-                        }
+                    fs.readFile(filePath, { encoding: "utf8" }, (err, data) => {
+                        return err ? rej(err) : res(data);
                     });
                 }
                 else {
@@ -71,15 +67,27 @@ class FilesService {
             return new Promise(async (res, rej) => {
                 if (await this.isFileExistAsync(imagePath)) {
                     fs.readFile(imagePath, (err, data) => {
-                        if (err) {
-                            return rej(err);
-                        } else {
-                            return res(data);
-                        }
+                        return err ? rej(err) : res(data);
                     });
                 }
                 else {
                     rej(`File ${imagePath} doesn't exist.`);
+                }
+            });
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    readDirectoryAsync = (dirPath) => {
+        try {
+            return new Promise(async (res, rej) => {
+                if (await this.isFileExistAsync(dirPath)) {
+                    fs.readdir(dirPath, (err, files) => {
+                        return err ? rej(err) : res(files);
+                    });
+                } else {
+                    rej(`Directory in path ${dirPath} doesn't exist.`);
                 }
             });
         } catch (error) {
@@ -94,10 +102,7 @@ class FilesService {
                     return res(false);
                 }
                 fs.writeFile(filePath, data, (err) => {
-                    if (err) {
-                        return rej(err)
-                    }
-                    res(true);
+                    return err ? rej(err) : res(true);
                 })
             });
         } catch (error) {
@@ -111,15 +116,20 @@ class FilesService {
                 // Convert data to JSON.
                 let jsonContent = JSON.stringify(data);
                 fs.writeFile(filePath, jsonContent, (err) => {
-                    if (err) {
-                        return rej(err)
-                    }
-                    res(true);
+                    return err ? rej(err) : res(true);
                 })
             });
         } catch (error) {
             throw error;
         }
+    }
+
+    renameImageAsync = (oldPath, newPath) => {
+        return new Promise((res, rej) => {
+            fs.rename(oldPath, newPath, (err) => {
+                return err ? rej(err) : res(true);;
+            })
+        });
     }
 }
 

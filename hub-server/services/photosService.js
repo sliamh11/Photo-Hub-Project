@@ -1,5 +1,6 @@
 const filesService = require('../services/filesService');
 const path = require('path');
+const { exist } = require('joi');
 
 class PhotosService {
 
@@ -55,7 +56,7 @@ class PhotosService {
 
     addNewPhoto = async (photoData) => {
         try {
-            let newPhotoData = await this.addPhotoToUploads(photoData);
+            const newPhotoData = await this.addPhotoToUploads(photoData);
             if (newPhotoData) {
                 if (await this.addPhotoToJson(newPhotoData)) {
                     return true;
@@ -97,12 +98,33 @@ class PhotosService {
         }
     }
 
-    updatePhotos = async () => {
-        // When a photo was changed.
-        // Basically, read the Json file and override it's settings
-        // If an image's caption was changed, override the photo too.  
-    }
+    updatePhoto = async (updatedPhoto, fileName) => {
+        try {
+            const fileData = JSON.parse(await filesService.readFileAsync(this.PHOTOS_PATH));
+            const existingPath = path.join(this.UPLOADS_PATH, `${fileName}.png`);
+            const existingPhoto = fileData.photos.find(photo => photo.src === existingPath)
 
+            if (!existingPhoto) {
+                throw new Error(`Image ${existingPath} not found.`);
+            }
+
+            updatedPhoto.src = existingPath;
+
+            // If existing photo's caption !== updated photo's caption - update image's name.
+            if (existingPhoto.caption !== updatedPhoto.caption) {
+                const newPath = path.join(this.UPLOADS_PATH, `${updatedPhoto.caption}.png`);
+                await filesService.renameImageAsync(existingPath, newPath);
+                updatedPhoto.src = newPath;
+            }
+
+            // Update the photos json array and re-write it.
+            const photoIndex = fileData.photos.indexOf(existingPhoto);
+            fileData.photos.splice(photoIndex, 1, updatedPhoto);
+            return await filesService.writeToJsonFileAsync(this.PHOTOS_PATH, fileData);
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = new PhotosService();

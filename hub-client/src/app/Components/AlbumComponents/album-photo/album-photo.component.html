@@ -1,10 +1,10 @@
 <div class="img-box">
     <img src="{{photo.src}}" alt="" />
-    <div class="transparent-box">
+    <div class="transparent-box" (click)="openPhotoInfo()">
         <div class="caption">
             <p>{{photo.caption}}</p>
             <p class="opacity-low">
-                <span *ngFor="let cat of photo.categories">{{cat.name}} </span>
+                <span *ngFor="let category of photo.categories">{{category.name}} </span>
             </p>
         </div>
     </div>

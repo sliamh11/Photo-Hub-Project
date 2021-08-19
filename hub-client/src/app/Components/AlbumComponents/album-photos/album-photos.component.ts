@@ -22,15 +22,20 @@ export class AlbumPhotosComponent implements OnInit {
         this.filterPhotos(filterData);
       });
 
-      this.albumService.onPhotosLoadedEvent.subscribe((data) => {
-        this.photos = data;
+      this.albumService.onPhotosUpdatedEvent.subscribe((photos) => {
+        this.photos = photos;
       });
+
+      // If still not loaded (will occur when coming back to the photos album for the second time without reloading the site.)
+      if (this.photos.length === 0) {
+        this.photos = this.albumService.photos;
+      }
     } catch (error) {
       this.snackBar.open(error.message);
     }
   }
 
-  filterPhotos(filter: any) {
+  filterPhotos = (filter: any) => {
     try {
       // If empty - return all
       if (filter.caption === "" && filter.categories[0].length === 0) {
@@ -43,7 +48,7 @@ export class AlbumPhotosComponent implements OnInit {
       // Check if string is not empty / whitespaces only
       if (/\S/.test(filter.caption)) {
         filteredPhotos = filteredPhotos.filter((photo) => {
-          photo.caption.toLowerCase().includes(filter.caption);
+          return photo.caption.toLowerCase().includes(filter.caption);
         });
       }
 

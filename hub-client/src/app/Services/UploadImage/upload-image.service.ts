@@ -9,23 +9,23 @@ import { ErrorHandlerService } from '../ErrorHandler/error-handler.service';
 })
 export class UploadImageService {
 
-  private URL = "http://localhost:5000/api/photos";
+  private URL = this.configService.PHOTOS_URL;
   private currentPhoto: PhotoModel;
 
   constructor(private configService: ConfigService, private httpClient: HttpClient, private errorService: ErrorHandlerService) {
     this.currentPhoto = new PhotoModel();
   }
 
-  setCurrentPhotoSource(imageSrc: string) {
+  setCurrentPhotoSource = (imageSrc: string) => {
     this.currentPhoto.src = imageSrc;
   }
 
-  setCurrentPhotoData(photo: PhotoModel) {
+  setCurrentPhotoData = (photo: PhotoModel) => {
     photo.src = this.currentPhoto.src;
     this.currentPhoto = photo;
   }
 
-  getCurrentPhoto() : PhotoModel{
+  getCurrentPhoto = (): PhotoModel => {
     return this.currentPhoto;
   }
 
@@ -37,7 +37,7 @@ export class UploadImageService {
     }
   }
 
-  async postSavePhoto(photo: PhotoModel) {
+  postSavePhoto = async (photo: PhotoModel) => {
     try {
       this.setCurrentPhotoData(photo);
       await this.httpClient.post(`${this.URL}`, this.currentPhoto).toPromise();

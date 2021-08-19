@@ -26,7 +26,9 @@ import { EditCategoriesComponent } from './Components/edit-categories/edit-categ
 import { EditImageComponent } from './Components/edit-image/edit-image.component';
 import { PrivateModeComponent } from './Components/private-mode/private-mode.component';
 import { PhotoInfoComponent } from './Components/photo-info/photo-info.component';
-import { AlbumPhotoComponent } from './Components/AlbumComponents/album-photo/album-photo.component'; 
+import { AlbumPhotoComponent } from './Components/AlbumComponents/album-photo/album-photo.component';
+import { PhotoInfoDialogComponent } from './Components/AlbumComponents/photo-info-dialog/photo-info-dialog.component';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 
@@ -48,7 +50,8 @@ import { AlbumPhotoComponent } from './Components/AlbumComponents/album-photo/al
     EditImageComponent,
     PrivateModeComponent,
     PhotoInfoComponent,
-    AlbumPhotoComponent
+    AlbumPhotoComponent,
+    PhotoInfoDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +63,7 @@ import { AlbumPhotoComponent } from './Components/AlbumComponents/album-photo/al
     MatComponentsModule
   ],
   providers: [
+    { provide: MAT_DIALOG_DATA, useValue: {} }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,47 @@
+<div class="dialog-container">
+    <!-- Top (title & edit mode) -->
+    <div>
+        <mat-icon *ngIf="isEditMode; else editMode" class="icon mode-icon" (click)="handleSaveClicked()">save</mat-icon>
+        <ng-template #editMode>
+            <mat-icon class="icon mode-icon" (click)="handleEditClicked()">edit</mat-icon>
+        </ng-template>
+        <h1 mat-dialog-title>Photo Info</h1>
+    </div>
+    <!-- Middle (content & image) -->
+    <mat-dialog-content class="dialog-content-grid">
+        <div class="details-container">
+            <div class="details">
+                <h2>Caption:</h2>
+                <div>{{photo.caption}}</div>
+            </div>
+            <div class="details">
+                <h2>Categories:</h2>
+                <span *ngFor="let category of photo.categories">{{category.name}} </span>
+            </div>
+            <div class="details">
+                <h2>Location:</h2>
+                <div>{{photo.location}}</div>
+            </div>
+        </div>
+        <div class="photo-container">
+            <img src="{{photo.src}}" />
+        </div>
+    </mat-dialog-content>
+    <!-- Bottom (buttons) -->
+    <div class="buttons-container">
+        <mat-dialog-actions>
+            <button mat-button mat-dialog-close>Cancel</button>
+        </mat-dialog-actions>
+        <div class="options-container">
+            <mat-icon>place</mat-icon>
+            <mat-icon *ngIf="photo.isFavorite; else notFavorite">favorite</mat-icon>
+            <ng-template #notFavorite>
+                <mat-icon>favorite_border</mat-icon>
+            </ng-template>
+            <mat-icon *ngIf="photo.isPrivate; else notPrivate">lock</mat-icon>
+            <ng-template #notPrivate>
+                <mat-icon>lock_open</mat-icon>
+            </ng-template>
+        </div>
+    </div>
+</div>

@@ -21,5 +21,5 @@ app.use("/api/photos", photosRoute);
 
 
 app.listen(config.PORT, () => {
-    console.log("Server is up.");
+    console.log("Server is up on port",config.PORT);
 });

@@ -19,7 +19,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
+import {MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   exports: [
@@ -40,7 +40,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatTabsModule,
     DragDropModule,
     NgxMatFileInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
   ]
 })
 export class MatComponentsModule { }
