@@ -14,7 +14,6 @@ export class AlbumService {
   photos: IPhoto[] = [];
   handleSearchEvent: EventEmitter<any>;
   onPhotosUpdatedEvent: EventEmitter<IPhoto[]>;
-  counter = 1;
 
   constructor(private httpClient: HttpClient, private errorService: ErrorHandlerService, private configService: ConfigService) {
     this.handleSearchEvent = new EventEmitter<any>();
@@ -29,8 +28,6 @@ export class AlbumService {
   loadPhotos = async () => {
 
     this.photos = await this.getPhotos();
-    console.log(`loadPhotos number`, this.counter++);
-    console.log(this.photos);
     this.onPhotosUpdatedEvent.emit(this.photos);
   }
 

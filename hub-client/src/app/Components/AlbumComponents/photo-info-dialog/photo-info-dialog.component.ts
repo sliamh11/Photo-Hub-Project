@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ICategory } from 'src/app/Models/ICategory';
-import { ILocation } from 'src/app/Models/ILocation';
 import { PhotoModel } from 'src/app/Models/PhotoModel';
 import { AlbumService } from 'src/app/Services/Album/album.service';
 import { ConfigService } from 'src/app/Services/config/config.service';

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ICategory } from 'src/app/Models/ICategory';
 import { PhotoModel } from 'src/app/Models/PhotoModel';
 import { UploadImageService } from 'src/app/Services/UploadImage/upload-image.service';
+import { LocationDialogComponent } from '../location-dialog/location-dialog.component';
 
 @Component({
   selector: 'app-photo-info',
@@ -15,16 +17,19 @@ export class PhotoInfoComponent {
   categories: ICategory[];
   photoModel: PhotoModel;
 
-  constructor(private uploadService: UploadImageService, private router: Router, private snackBar: MatSnackBar) {
+  constructor(private uploadService: UploadImageService,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog) {
     this.photoModel = new PhotoModel();
     this.loadCategories();
   }
 
-  async loadCategories() {
+  loadCategories = async () => {
     this.categories = await this.uploadService.getCategories();
   }
 
-  async handleClickNext() {
+  handleClickNext = async () => {
     try {
       let result = await this.uploadService.postSavePhoto(this.photoModel);
       if (result) {
@@ -38,4 +43,17 @@ export class PhotoInfoComponent {
     }
 
   }
+
+  openLocationDialog = () => {
+    const dialogRef = this.dialog.open(LocationDialogComponent, {
+      data: this.photoModel.location
+    });
+
+    dialogRef.afterClosed().subscribe((location) => {
+      console.log(location);
+      
+      this.photoModel.location = location.data;
+    });
+  }
+
 }

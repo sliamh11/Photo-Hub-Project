@@ -26,6 +26,10 @@ export class AlbumPhotosComponent implements OnInit {
         this.photos = photos;
       });
 
+      // If still not loaded (will occur when coming back to the photos album for the second time without reloading the site.)
+      if (this.photos.length === 0) {
+        this.photos = this.albumService.photos;
+      }
     } catch (error) {
       this.snackBar.open(error.message);
     }

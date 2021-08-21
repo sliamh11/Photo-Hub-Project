@@ -1,25 +1,32 @@
 <div class="main-grid">
     <div class="center">
-
+        <!-- Caption Field -->
         <mat-form-field appearance="fill">
             <mat-label>Caption</mat-label>
-            <input matInput [(ngModel)]="photoModel.caption" placeholder="Enter Caption" >
+            <input matInput [(ngModel)]="photoModel.caption" placeholder="Enter Caption">
         </mat-form-field>
-
+        <!-- Categories Field -->
         <mat-form-field appearance="fill">
             <mat-label>Categories</mat-label>
             <mat-select [(value)]="photoModel.categories" multiple>
                 <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}</mat-option>
             </mat-select>
         </mat-form-field>
-        
-        <mat-form-field appearance="fill">
-            <mat-label>Location</mat-label>
-            <input matInput [(ngModel)]="photoModel.location" placeholder="Enter Location">
-        </mat-form-field>
 
-            <mat-checkbox [(ngModel)]="photoModel.isFavorite">Favorite</mat-checkbox>
-            <mat-checkbox [(ngModel)]="photoModel.isPrivate">Private</mat-checkbox>
+        <!-- Location Field -->
+        <div class="location-container">
+            <div class="title">Location</div>
+            <div class="location">
+                <div class="location-address">
+                    <div *ngIf="photoModel.location">{{photoModel.location.address}}</div>
+                </div>
+                <mat-icon matSuffix (click)="openLocationDialog()">place</mat-icon>
+            </div>
+        </div>
+
+        <!-- Favorite & Private fields -->
+        <mat-checkbox [(ngModel)]="photoModel.isFavorite">Favorite</mat-checkbox>
+        <mat-checkbox [(ngModel)]="photoModel.isPrivate">Private</mat-checkbox>
     </div>
     <div class="center">
         <button mat-raised-button color="primary" (click)="handleClickNext()">Next</button>

@@ -57,8 +57,11 @@ export class LocationDialogComponent implements OnInit {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
 
+        console.log("Location:");
+        console.log(this.location);
+
         // Check if object isn't empty.
-        if (Object.keys(this.location).length > 0) {
+        if (this.location && Object.keys(this.location).length > 0) {
 
           this.latitude = this.location.lat;
           this.longitude = this.location.lng;
@@ -100,9 +103,11 @@ export class LocationDialogComponent implements OnInit {
   }
 
   handleSaveAndClose = () => {
-    this.location.address = this.address;
-    this.location.lat = this.latitude;
-    this.location.lng = this.longitude;
+    this.location = {
+      address: this.address,
+      lat: this.latitude,
+      lng: this.longitude
+    }
     this.dialogRef.close({ event: 'close', data: this.location });
   }
 }
