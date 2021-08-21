@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, EventEmitter } from '@angular/core';
-import { PhotoInterface } from 'src/app/Models/PhotoInterface';
+import { IPhoto } from 'src/app/Models/IPhoto';
 import { PhotoModel } from 'src/app/Models/PhotoModel';
 import { ConfigService } from '../config/config.service';
 import { ErrorHandlerService } from '../ErrorHandler/error-handler.service';
@@ -11,13 +11,14 @@ import { ErrorHandlerService } from '../ErrorHandler/error-handler.service';
 export class AlbumService {
 
   URL = this.configService.PHOTOS_URL;
-  photos: PhotoInterface[] = [];
+  photos: IPhoto[] = [];
   handleSearchEvent: EventEmitter<any>;
-  onPhotosUpdatedEvent: EventEmitter<any>;
+  onPhotosUpdatedEvent: EventEmitter<IPhoto[]>;
+  counter = 1;
 
   constructor(private httpClient: HttpClient, private errorService: ErrorHandlerService, private configService: ConfigService) {
     this.handleSearchEvent = new EventEmitter<any>();
-    this.onPhotosUpdatedEvent = new EventEmitter<any>();
+    this.onPhotosUpdatedEvent = new EventEmitter<IPhoto[]>();
     this.loadPhotos();
   }
 
@@ -26,7 +27,10 @@ export class AlbumService {
   }
 
   loadPhotos = async () => {
+
     this.photos = await this.getPhotos();
+    console.log(`loadPhotos number`, this.counter++);
+    console.log(this.photos);
     this.onPhotosUpdatedEvent.emit(this.photos);
   }
 
@@ -47,7 +51,7 @@ export class AlbumService {
 
   getPhotos = async () => {
     try {
-      return await this.httpClient.get<PhotoInterface[]>(`${this.URL}`).toPromise();
+      return await this.httpClient.get<IPhoto[]>(`${this.URL}`).toPromise();
     } catch (error) {
       throw this.errorService.handleError(error);
     }

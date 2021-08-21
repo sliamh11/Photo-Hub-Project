@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditImageComponent } from './edit-image.component';
+import { LocationDialogComponent } from './location-dialog.component';
 
-describe('EditImageComponent', () => {
-  let component: EditImageComponent;
-  let fixture: ComponentFixture<EditImageComponent>;
+describe('LocationDialogComponent', () => {
+  let component: LocationDialogComponent;
+  let fixture: ComponentFixture<LocationDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditImageComponent ]
+      declarations: [ LocationDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditImageComponent);
+    fixture = TestBed.createComponent(LocationDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

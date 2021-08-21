@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PhotoInterface } from 'src/app/Models/PhotoInterface';
+import { IPhoto } from 'src/app/Models/IPhoto';
 import { AlbumService } from 'src/app/Services/Album/album.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { AlbumService } from 'src/app/Services/Album/album.service';
 })
 export class AlbumPhotosComponent implements OnInit {
 
-  photos: PhotoInterface[];
+  photos: IPhoto[];
 
   constructor(private albumService: AlbumService, private snackBar: MatSnackBar) {
     this.photos = [];
@@ -26,10 +26,6 @@ export class AlbumPhotosComponent implements OnInit {
         this.photos = photos;
       });
 
-      // If still not loaded (will occur when coming back to the photos album for the second time without reloading the site.)
-      if (this.photos.length === 0) {
-        this.photos = this.albumService.photos;
-      }
     } catch (error) {
       this.snackBar.open(error.message);
     }
@@ -43,7 +39,7 @@ export class AlbumPhotosComponent implements OnInit {
         return;
       }
 
-      let filteredPhotos: PhotoInterface[] = this.albumService.photos;
+      let filteredPhotos: IPhoto[] = this.albumService.photos;
 
       // Check if string is not empty / whitespaces only
       if (/\S/.test(filter.caption)) {

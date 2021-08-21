@@ -5,7 +5,7 @@ import { AlbumComponent } from './Components/AlbumComponents/album/album.compone
 import { ConfigComponent } from './Components/config/config.component';
 import { EditCategoriesComponent } from './Components/edit-categories/edit-categories.component';
 import { PhotoInfoComponent } from './Components/photo-info/photo-info.component';
-import { PrivateModeComponent } from './Components/private-mode/private-mode.component';
+import { PrivateModeComponent } from './Components/PrivateMode/private-mode/private-mode.component';
 import { UploadImageComponent } from './Components/UploadImageComponents/upload-image/upload-image.component';
 import { WelcomeComponent } from './Components/welcome/welcome.component';
 

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PhotoInterface } from 'src/app/Models/PhotoInterface';
+import { IPhoto } from 'src/app/Models/IPhoto';
 import { PhotoInfoDialogComponent } from '../photo-info-dialog/photo-info-dialog.component';
 
 
@@ -11,12 +11,12 @@ import { PhotoInfoDialogComponent } from '../photo-info-dialog/photo-info-dialog
 })
 
 export class AlbumPhotoComponent implements OnInit {
-  @Input() photo: PhotoInterface;
+  @Input() photo: IPhoto;
 
   constructor(public dialog: MatDialog) {
   }
 
-  openPhotoInfo = () => {
+  openPhotoInfoDialog = () => {
     this.dialog.open(PhotoInfoDialogComponent, {
       data: this.photo
     });

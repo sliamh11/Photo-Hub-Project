@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Category } from 'src/app/Models/Category';
+import { ICategory } from 'src/app/Models/ICategory';
 import { PhotoModel } from 'src/app/Models/PhotoModel';
 import { UploadImageService } from 'src/app/Services/UploadImage/upload-image.service';
 
@@ -12,7 +12,7 @@ import { UploadImageService } from 'src/app/Services/UploadImage/upload-image.se
 })
 export class PhotoInfoComponent {
 
-  categories: Category[];
+  categories: ICategory[];
   photoModel: PhotoModel;
 
   constructor(private uploadService: UploadImageService, private router: Router, private snackBar: MatSnackBar) {

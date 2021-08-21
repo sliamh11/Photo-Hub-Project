@@ -20,7 +20,7 @@
             </div>
             <div class="details">
                 <h2>Location:</h2>
-                <div>{{photo.location}}</div>
+                <div *ngIf="photo.location.address">{{photo.location.address}}</div>
             </div>
         </div>
         <ng-template #editBlock>
@@ -43,8 +43,8 @@
                 <div class="details ">
                     <h2>Location:</h2>
                     <div class="edit-location">
-                        {{photo.location}}
-                        <mat-icon matSuffix>place</mat-icon>
+                        <div *ngIf="photo.location.address">{{photo.location.address}}</div>
+                        <mat-icon matSuffix (click)="openLocationDialog()">place</mat-icon>
                     </div>
                 </div>
             </div>

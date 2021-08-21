@@ -1,15 +1,16 @@
-import { Category } from "./Category";
-import { PhotoInterface } from "./PhotoInterface";
+import { ICategory } from "./ICategory";
+import { IPhoto } from "./IPhoto";
+import { ILocation } from "./ILocation";
 
-export class PhotoModel implements PhotoInterface{
+export class PhotoModel implements IPhoto {
     src: string;
     caption: string;
-    categories: Category[];
-    location: any;
+    categories: ICategory[];
+    location: ILocation;
     isFavorite: boolean;
     isPrivate: boolean;
 
-    constructor(){
+    constructor() {
         this.src = null;
         this.caption = "";
         this.categories = [];

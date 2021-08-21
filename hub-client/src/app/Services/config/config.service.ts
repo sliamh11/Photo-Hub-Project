@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { View } from 'src/app/Models/View';
 import { ConfigModel } from 'src/app/Models/ConfigModel';
-import { Category } from 'src/app/Models/Category';
+import { ICategory } from 'src/app/Models/ICategory';
 import { ErrorHandlerService } from '../ErrorHandler/error-handler.service';
 
 @Injectable({
@@ -35,7 +35,7 @@ export class ConfigService {
 
   async getCategories() {
     try {
-      return await this.httpClient.get<Category[]>(`${this.CONFIG_URL}/categories`).toPromise();
+      return await this.httpClient.get<ICategory[]>(`${this.CONFIG_URL}/categories`).toPromise();
     } catch (error) {
       throw this.errorService.handleError(error);
     }
