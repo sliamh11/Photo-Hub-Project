@@ -1,1 +1,25 @@
-<p>edit-categories works!</p>
+<div class="categories-main-container">
+    <div class="title-container">
+        Edit Categories Page
+    </div>
+    <div class="add-category-container">
+        <mat-form-field appearance="fill">
+            <mat-label>New Category</mat-label>
+            <input #categoryName type="text" matInput placeholder="Category Name">
+        </mat-form-field>
+        <button mat-raised-button color="accent" (click)="handleAddCategory(categoryName.value)">
+            <div class="button-content">Add
+                <mat-icon>post_add</mat-icon>
+            </div>
+        </button>
+    </div>
+    <div class="categories-list-container">
+        <div class="categories-list">
+            <div class="category-container" *ngFor="let category of categoriesList">
+                <div #category class="category" id="category.id">{{category.name}}</div>
+                <mat-icon (click)="handleRemoveCategory(category)">delete</mat-icon>
+            </div>
+        </div>
+    </div>
+
+</div>

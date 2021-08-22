@@ -109,8 +109,20 @@ class ConfigService {
 
     getCategoriesAsync = async () => {
         try {
-            let result = await this.getDataFromFileAsync(this.CATEGORIES_PATH);
-            return result.categories;
+            return await this.getDataFromFileAsync(this.CATEGORIES_PATH);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    postCategoriesAsync = async (updatedCategories) => {
+        try {
+            // reset categories ID (in case the order changed).
+            for (let index = 0; index < updatedCategories.length; index++) {
+                const element = updatedCategories[index];
+                element.id = index;
+            }
+            return await filesService.writeToJsonFileAsync(this.CATEGORIES_PATH, updatedCategories);
         } catch (error) {
             throw error;
         }

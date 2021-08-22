@@ -42,4 +42,13 @@ router.get("/categories", async (req, res) => {
     }
 });
 
+router.post("/categories", async (req, res) => {
+    try {
+        // req.body === updated categories list
+        res.send(await configService.postCategoriesAsync(req.body));
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+});
+
 module.exports = router;

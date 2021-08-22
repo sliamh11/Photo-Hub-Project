@@ -14,10 +14,10 @@ export class ConfigService {
   CONFIG_URL = "http://localhost:5000/api/config";
   PHOTOS_URL = "http://localhost:5000/api/photos";
 
-  constructor(private httpClient: HttpClient, private errorService : ErrorHandlerService) {
+  constructor(private httpClient: HttpClient, private errorService: ErrorHandlerService) {
   }
 
-  async isConfigDataExists() {
+  isConfigDataExists = async () => {
     try {
       return await this.httpClient.get(`${this.CONFIG_URL}/is-data-exists`).toPromise();
     } catch (error) {
@@ -25,7 +25,7 @@ export class ConfigService {
     }
   }
 
-  async getViewsList() {
+  getViewsList = async () => {
     try {
       return await this.httpClient.get<View[]>(`${this.CONFIG_URL}/views`).toPromise();
     } catch (error) {
@@ -33,9 +33,17 @@ export class ConfigService {
     }
   }
 
-  async getCategories() {
+  getCategories = async () => {
     try {
       return await this.httpClient.get<ICategory[]>(`${this.CONFIG_URL}/categories`).toPromise();
+    } catch (error) {
+      throw this.errorService.handleError(error);
+    }
+  }
+
+  postCategories = async (updatedCategories: ICategory[]) => {
+    try {
+      return await this.httpClient.post<ICategory[]>(`${this.CONFIG_URL}/categories`, updatedCategories).toPromise();
     } catch (error) {
       throw this.errorService.handleError(error);
     }

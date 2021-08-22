@@ -1,6 +1,6 @@
-.main-grid{
+.camera-grid{
     display: grid;
-    grid-template-rows: 50vh 10vh;
+    grid-template-rows: 58vh 20vh;
 }
 
 .container{

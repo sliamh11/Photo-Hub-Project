@@ -1,6 +1,5 @@
 const filesService = require('../services/filesService');
 const path = require('path');
-const { exist } = require('joi');
 
 class PhotosService {
 
@@ -64,7 +63,7 @@ class PhotosService {
             }
             return false;
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
             throw error;
         }
     }
@@ -100,6 +99,7 @@ class PhotosService {
 
     updatePhoto = async (updatedPhoto, fileName) => {
         try {
+            // Check if file exists and and get it.
             const fileData = JSON.parse(await filesService.readFileAsync(this.PHOTOS_PATH));
             const existingPath = path.join(this.UPLOADS_PATH, `${fileName}.png`);
             const existingPhoto = fileData.photos.find(photo => photo.src === existingPath)

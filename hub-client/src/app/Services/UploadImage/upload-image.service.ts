@@ -12,7 +12,9 @@ export class UploadImageService {
   private URL = this.configService.PHOTOS_URL;
   private currentPhoto: PhotoModel;
 
-  constructor(private configService: ConfigService, private httpClient: HttpClient, private errorService: ErrorHandlerService) {
+  constructor(private configService: ConfigService,
+    private httpClient: HttpClient,
+    private errorService: ErrorHandlerService) {
     this.currentPhoto = new PhotoModel();
   }
 

@@ -1,1 +1,36 @@
-<p>online-image works!</p>
+<div class="online-photos-container">
+    <!-- Top -->
+    <div class="search-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Search</mat-label>
+            <input #searchQuery type="text" matInput>
+        </mat-form-field>
+        <button mat-raised-button color="accent" (click)="handleSearch(searchQuery.value)">
+            Search
+            <mat-icon>search</mat-icon>
+        </button>
+    </div>
+
+    <!-- Middle -->
+    <div class="photos-container">
+        <div class="photos">
+            <div class="image-container" *ngFor="let photo of photosList">
+                <img *ngIf="photo.src.medium === chosenPhoto; else elseBlock" class="image active" (click)="handlePhotoSelected(photo.src.medium)" [src]="photo.src.medium">
+                <ng-template #elseBlock>
+                    <img #elseBlock class="image" (click)="handlePhotoSelected(photo.src.medium)" [src]="photo.src.medium">
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom -->
+    <div class="buttons-container">
+        <button mat-raised-button color="accent" (click)="handleLastPage()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div>{{pageNumber}}</div>
+        <button mat-raised-button color="accent" (click)="handleNextPage()">
+            <mat-icon>arrow_forward</mat-icon>
+        </button>
+    </div>
+</div>

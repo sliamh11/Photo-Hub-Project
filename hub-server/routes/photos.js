@@ -22,9 +22,9 @@ router.post("/", async (req, res) => {
         }
 
         if (await photosService.addNewPhoto(req.body)) {
-            res.status(200).send(true);
+            return res.status(200).send(true);
         } else {
-            res.status(400).send("File already exists");
+            return res.status(400).send("File already exists");
         }
     } catch (error) {
         console.log(`photos MW,post error: ${error}`);

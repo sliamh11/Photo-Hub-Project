@@ -50,9 +50,9 @@ export class PhotoInfoComponent {
     });
 
     dialogRef.afterClosed().subscribe((location) => {
-      console.log(location);
-      
-      this.photoModel.location = location.data;
+      if (location) {
+        this.photoModel.location = location.data;
+      }
     });
   }
 

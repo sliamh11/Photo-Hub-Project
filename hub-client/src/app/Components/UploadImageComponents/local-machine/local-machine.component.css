@@ -1,24 +1,27 @@
-.main-grid{
+.local-machine-grid{
     display: grid;
-    grid-template-rows: 15vh 55vh;
+    grid-template-rows: 18vh 60vh;
     overflow: hidden;
+    height: 100%;
 }
 
-.container{
+.file-container{
     display: flex;
-}
-
-.center{
     justify-content: center;
     align-items: center;
+    height: 100%;
+    padding: 10px;
 }
 
-.top{
+.image-container{
+    height: 100%;
+    min-height: 55vh;
+    display: flex;
     justify-content: center;
     align-items: baseline;
 }
 
-.container > img{
+.image-container > img{
     max-height: 55vh;
     max-width: 65vw;
 }

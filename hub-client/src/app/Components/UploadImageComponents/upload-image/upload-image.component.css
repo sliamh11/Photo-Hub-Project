@@ -1,13 +1,27 @@
-.main-grid{
+body .main-grid{
+    height: 100%;
     display: grid;
-    grid-template-rows: 75vh 15vh;
+    grid-template-rows: 80% 20%;
     overflow: hidden;
+    overflow:hidden;
 }
 
-.container{
+.main-grid > .views-container{
+    height: 100%;
+}
+
+.views-container > .mat-tab-group{
+    height: 100%;
+}
+.mat-tab-group .mat-tab{
+    height: 100%;
+}
+
+.main-grid > .button-container{
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
+    height: 100%;
 }
 
 .btn{
@@ -15,5 +29,5 @@
     height:2rem;
     align-self: center;
     justify-self: center;
-    margin: 5vh 5vw;
+    margin: 0 10%;
 }
