@@ -8,15 +8,12 @@ import { ConfigService } from 'src/app/Services/config/config.service';
   templateUrl: './edit-categories.component.html',
   styleUrls: ['./edit-categories.component.css']
 })
-export class EditCategoriesComponent implements OnInit {
+export class EditCategoriesComponent {
   @ViewChild('categoryName') public categoryRef: ElementRef;
   categoriesList: ICategory[];
 
   constructor(private configService: ConfigService, private snackBar: MatSnackBar) {
     this.initCategories();
-  }
-
-  ngOnInit(): void {
   }
 
   initCategories = async () => {

@@ -1,20 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigModel } from 'src/app/Models/ConfigModel';
 import { IView } from 'src/app/Models/IView';
 import { ConfigService } from 'src/app/Services/config/config.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-config',
   templateUrl: './config.component.html',
   styleUrls: ['./config.component.css']
 })
-export class ConfigComponent implements OnInit {
+export class ConfigComponent {
 
   viewsList: IView[];
-  selectedView: any;
+  selectedView: IView;
   albumName: string;
   hide: boolean = true;
   allowPrivateMode: boolean = false;
@@ -28,22 +27,18 @@ export class ConfigComponent implements OnInit {
     this.loadViewsList();
   }
 
-  // Make it that way that the first value will be the default value (and show it).
-  ngOnInit(): void {
-  }
-
   loadViewsList = async () => {
-    this.viewsList = await this.configService.getViewsList();
-    this.selectedView = this.viewsList[0];
+    this.viewsList = await this.configService.getViews();
+    this.selectedView = this.viewsList[0]; // Default selection 
   }
 
   handleViewSelected = (view: IView) => {
-    this.selectedView = this.viewsList[view.id];
+    this.selectedView = view;
   }
 
   handleClickNext = async () => {
     try {
-      let configuration = new ConfigModel(this.selectedView, this.albumName, this.allowPrivateMode, this.allowLocation, this.allowCamera, this.privatePassword);
+      const configuration = new ConfigModel(this.selectedView, this.albumName, this.allowPrivateMode, this.allowLocation, this.allowCamera, this.privatePassword);
       if (await this.configService.postConfiguration(configuration)) {
         this.router.navigate(["upload-image"]);
       }
@@ -54,5 +49,4 @@ export class ConfigComponent implements OnInit {
       this.snackBar.open(`${error.message}`, "Ok");
     }
   }
-
 }

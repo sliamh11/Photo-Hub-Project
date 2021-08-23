@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent {
+export class NavComponent implements OnInit {
 
   isPrivateMode: boolean;
 
@@ -28,7 +28,11 @@ export class NavComponent {
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private configService: ConfigService,
-    private router: Router) {
+    private router: Router
+  ) { }
+
+  ngOnInit(): void {
+    // Get notified when private mode changes to update icon & tab states.
     this.configService.onPrivateModeChanged.subscribe((isEnabled) => {
       this.isPrivateMode = isEnabled;
     });
@@ -40,6 +44,7 @@ export class NavComponent {
 
   openPrivateModeDialog = () => {
     const dialogRef = this.dialog.open(PrivateModeDialogComponent);
+
     dialogRef.afterClosed().subscribe((isEnabled) => {
       if (isEnabled) {
         this.configService.setPrivateMode(isEnabled);
@@ -49,5 +54,4 @@ export class NavComponent {
       }
     });
   }
-
 }

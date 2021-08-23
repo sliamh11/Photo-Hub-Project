@@ -21,7 +21,7 @@ export class AlbumPhotosComponent implements OnInit {
     private albumService: AlbumService,
     private snackBar: MatSnackBar,
     private configService: ConfigService) {
-    this.init();
+    this.loadViewMode();
     this.photos = [];
 
     // Subscribed here because it needs to get the value before AlbumSearchComponent.
@@ -30,10 +30,8 @@ export class AlbumPhotosComponent implements OnInit {
     });
   }
 
-  init = () => {
-    this.configService.getSelectedView().subscribe((view) => {
-      this.viewMode = view;
-    });
+  loadViewMode = async () => {
+    this.viewMode = await this.configService.getSelectedView();
   }
 
   ngOnInit(): void {

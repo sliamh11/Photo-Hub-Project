@@ -11,28 +11,24 @@ import { Router } from '@angular/router';
 })
 export class ConfigService {
 
-  // URLs
+  // Properties
   CONFIG_URL = "http://localhost:5000/api/config";
   PHOTOS_URL = "http://localhost:5000/api/photos";
-
-  // Private Mode
   private isPrivateModeEnabled = false;
   private isPrivateMode = false;
-
   onPrivateModeChanged: EventEmitter<boolean>;
 
   constructor(private httpClient: HttpClient, private errorService: ErrorHandlerService, private router: Router) {
     this.onPrivateModeChanged = new EventEmitter<boolean>();
-    this.init();
+    this.getPrivateEnabled();
   }
 
-  private init = async () => {
-    this.isPrivateModeEnabled = await this.getPrivateEnabled();
-  }
+  // Get Requests
 
+  // Check if PrivateMode is allowed in the config file.
   private getPrivateEnabled = async () => {
     try {
-      return await this.httpClient.get<boolean>(`${this.CONFIG_URL}/private-mode`).toPromise();
+      this.isPrivateModeEnabled = await this.httpClient.get<boolean>(`${this.CONFIG_URL}/private-mode`).toPromise();
     } catch (error) {
       throw this.errorService.handleError(error)
     }
@@ -46,7 +42,7 @@ export class ConfigService {
     }
   }
 
-  getViewsList = async () => {
+  getViews = async () => {
     try {
       return await this.httpClient.get<IView[]>(`${this.CONFIG_URL}/views`).toPromise();
     } catch (error) {
@@ -62,6 +58,42 @@ export class ConfigService {
     }
   }
 
+  checkPasswordsMatch = async (password: string) => {
+    try {
+      const data = {
+        password: password
+      }
+      return await this.httpClient.post(`${this.CONFIG_URL}/private-mode`, data).toPromise();
+    } catch (error) {
+      throw this.errorService.handleError(error);
+    }
+  }
+
+  getSelectedView = async () => {
+    try {
+      return await this.httpClient.get<IView>(`${this.CONFIG_URL}/views/selected-view`).toPromise();
+    } catch (error) {
+      throw this.errorService.handleError(error);
+    }
+  }
+
+  isCameraAllowed = async () => {
+    try {
+      return this.httpClient.get<boolean>(`${this.CONFIG_URL}/camera-allowed`).toPromise();
+    } catch (error) {
+      throw this.errorService.handleError(error);
+    }
+  }
+
+  isLocationAllowed = async () => {
+    try {
+      return this.httpClient.get<boolean>(`${this.CONFIG_URL}/location-allowed`).toPromise();
+    } catch (error) {
+      throw this.errorService.handleError(error);
+    }
+  }
+
+  // Post Requests
   postCategories = async (updatedCategories: ICategory[]) => {
     try {
       return await this.httpClient.post<ICategory[]>(`${this.CONFIG_URL}/categories`, updatedCategories).toPromise();
@@ -83,6 +115,7 @@ export class ConfigService {
     }
   }
 
+  // Helpers
   getPrivateMode = () => {
     return this.isPrivateModeEnabled ? this.isPrivateMode : false;
   }
@@ -91,41 +124,6 @@ export class ConfigService {
     if (this.isPrivateModeEnabled) {
       this.isPrivateMode = isEnabled;
       this.onPrivateModeChanged.emit(this.isPrivateMode);
-    }
-  }
-
-  checkPasswordsMatch = async (password: string) => {
-    try {
-      const data = {
-        password: password
-      }
-      return await this.httpClient.post(`${this.CONFIG_URL}/private-mode`, data).toPromise();
-    } catch (error) {
-      throw this.errorService.handleError(error);
-    }
-  }
-
-  getSelectedView = () => {
-    try {
-      return this.httpClient.get<IView>(`${this.CONFIG_URL}/views/selected-view`);
-    } catch (error) {
-      throw this.errorService.handleError(error);
-    }
-  }
-
-  isCameraAllowed = async () => {
-    try {
-      return this.httpClient.get<boolean>(`${this.CONFIG_URL}/camera-allowed`).toPromise();
-    } catch (error) {
-      throw this.errorService.handleError(error);
-    }
-  }
-
-  isLocationAllowed = async () => {
-    try {
-      return this.httpClient.get<boolean>(`${this.CONFIG_URL}/location-allowed`).toPromise();
-    } catch (error) {
-      throw this.errorService.handleError(error);
     }
   }
 }

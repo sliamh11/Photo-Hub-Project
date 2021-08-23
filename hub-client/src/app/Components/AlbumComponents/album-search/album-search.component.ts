@@ -18,16 +18,17 @@ export class AlbumSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Every time Private/Favorite mode are changed, re-search the photos.
     this.configService.onPrivateModeChanged.subscribe(() => {
       this.searchPhoto();
     });
 
-    this.albumService.onFavoriteModeChanged.subscribe((isEnabled) => {
+    this.albumService.onFavoriteModeChanged.subscribe(() => {
       this.searchPhoto();
     });
   }
 
-  searchPhoto() {
+  searchPhoto = () => {
     const editedCategoriese = this.categoryInput.trim().toLowerCase().split(/(?:,| )+/);
     const editedCaption = this.captionInput.toLowerCase().trim();
     this.albumService.handleSearch({

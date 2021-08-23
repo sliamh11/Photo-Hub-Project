@@ -26,8 +26,8 @@ export class LocationDialogComponent implements OnInit {
     private mapsAPILoader: MapsAPILoader,
     public dialogRef: MatDialogRef<any>,
     private ngZone: NgZone,
-    private snackBar: MatSnackBar) {
-  }
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     // Load Places Autocomplete's functionality
@@ -66,6 +66,7 @@ export class LocationDialogComponent implements OnInit {
       return;
     }
 
+    // Set location in map.
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
 
@@ -84,6 +85,7 @@ export class LocationDialogComponent implements OnInit {
     }
   }
 
+  // Called at the end of a drag action.
   markerDragEnd($event: any) {
     this.latitude = $event.coords.lat;
     this.longitude = $event.coords.lng;
@@ -101,7 +103,6 @@ export class LocationDialogComponent implements OnInit {
           this.latitude = latitude;
           this.longitude = longitude;
         } else {
-          window.alert('No results found');
           this.snackBar.open("No results found, please tag another point.", "Ok");
         }
       } else {
@@ -111,11 +112,12 @@ export class LocationDialogComponent implements OnInit {
   }
 
   handleSaveAndClose = () => {
+    // Save location and send it back as a result.
     this.location = {
       address: this.address,
       lat: this.latitude,
       lng: this.longitude
     }
-    this.dialogRef.close({ event: 'close', data: this.location });
+    this.dialogRef.close(this.location);
   }
 }

@@ -8,14 +8,18 @@ import { ConfigService } from 'src/app/Services/config/config.service';
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.css']
 })
-export class WelcomeComponent{
+export class WelcomeComponent {
 
-  constructor(private router: Router, private configService: ConfigService, private snackBar: MatSnackBar) { }
+  constructor(
+    private router: Router,
+    private configService: ConfigService,
+    private snackBar: MatSnackBar
+  ) { }
 
-  async handleClick() {
+  handleClick = async () => {
+    // Check if Configuration data exists and navigate accordingly.
     try {
-      let result = await this.configService.isConfigDataExists();
-      if (result) {
+      if (await this.configService.isConfigDataExists()) {
         this.router.navigate(["upload-image"]);
       }
       else {

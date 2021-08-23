@@ -28,7 +28,7 @@ export class AlbumComponent implements OnInit {
 
   initAlbum = async () => {
     this.isPrivateMode = this.configService.getPrivateMode();
-    this.viewsList = await this.configService.getViewsList();
+    this.viewsList = await this.configService.getViews();
   }
 
   disablePrivateMode = () => {

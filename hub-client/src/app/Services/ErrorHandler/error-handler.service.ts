@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class ErrorHandlerService {
 
+  // Handle error messages, mainly from server.
   handleError = (error) => {
     if (error.error && typeof error.error === "string") {
       throw new Error(error.error);

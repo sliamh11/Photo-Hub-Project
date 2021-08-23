@@ -21,7 +21,7 @@ export class CameraComponent implements AfterViewInit {
   VIDEO_WIDTH = 480;
   VIDEO_HEIGHT = 360;
 
-  constructor(private configService: ConfigService, private service: UploadImageService, private snackBar: MatSnackBar) {
+  constructor(private configService: ConfigService, private uploadService: UploadImageService, private snackBar: MatSnackBar) {
     this.isBtnDisabled = false;
     this.captures = []
   }
@@ -33,11 +33,15 @@ export class CameraComponent implements AfterViewInit {
 
   setupDevices = async () => {
     try {
+      // If camera is allowed in configuration file
       if (await this.configService.isCameraAllowed()) {
+        // Ask for premission in browser
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
           const stream = await navigator.mediaDevices.getUserMedia({
             video: true
           });
+
+          // If stream found
           if (stream) {
             this.video.nativeElement.srcObject = stream;
             this.video.nativeElement.play();
@@ -57,15 +61,17 @@ export class CameraComponent implements AfterViewInit {
 
   capture = () => {
     try {
+      // Create an image and save it in 'captures' array.
       this.drawImageToCanvas(this.video.nativeElement);
       let imgUrl = this.canvas.nativeElement.toDataURL("image/png");
       let imgId = this.captures.length;
       let currImage = { id: imgId, url: imgUrl };
       this.captures.push(currImage);
 
+      // If this is the first image captured, set it as the chosen picture.
       if (!this.isChosen) {
         this.currentCaptureIndex = currImage.id;
-        this.service.setCurrentPhotoSource(currImage.url);
+        this.uploadService.setCurrentPhotoSource(currImage.url);
       }
     } catch (error) {
       this.snackBar.open(`Error: ${error.message}`);
@@ -73,14 +79,16 @@ export class CameraComponent implements AfterViewInit {
   }
 
   drawImageToCanvas = (image: any) => {
+    // Capture image from within a video frame.
     this.canvas.nativeElement
       .getContext("2d")
       .drawImage(image, 0, 0, this.VIDEO_WIDTH, this.VIDEO_HEIGHT);
   }
 
   imageClicked = (e) => {
+    // Save selected image's url source.
     this.isChosen = true;
     this.currentCaptureIndex = parseInt(e.target.attributes.id.value);
-    this.service.setCurrentPhotoSource(this.captures[this.currentCaptureIndex].url)
+    this.uploadService.setCurrentPhotoSource(this.captures[this.currentCaptureIndex].url)
   }
 }

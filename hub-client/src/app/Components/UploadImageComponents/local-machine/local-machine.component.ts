@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UploadImageService } from 'src/app/Services/UploadImage/upload-image.service';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './local-machine.component.html',
   styleUrls: ['./local-machine.component.css']
 })
-export class LocalMachineComponent implements OnInit {
+export class LocalMachineComponent {
 
   source: FormControl;
   test: any;
@@ -20,21 +20,21 @@ export class LocalMachineComponent implements OnInit {
     this.source = new FormControl(null, Validators.required);
   }
 
-  ngOnInit(): void {
-  }
-
   readFilePath() {
+    // If source is null / undefined.
     if (!this.source) {
       return;
     }
 
-    var imgType = this.source.value.type;
+    // Image type validation
+    let imgType = this.source.value.type;
     if (imgType.match(/image\/*/) == null) {
       this.snackBar.open("Only images are allowed, last image is applied.", "Ok");
       return;
     }
 
-    var reader = new FileReader();
+    // Read image and save its URL.
+    const reader = new FileReader();
     this.imgPath = this.source.value.name;
     reader.readAsDataURL(this.source.value);
     reader.onload = (_event) => {

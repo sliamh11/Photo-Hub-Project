@@ -10,11 +10,13 @@ import { ConfigService } from 'src/app/Services/config/config.service';
 })
 export class PrivateModeDialogComponent {
 
-  hidePassword: boolean;
+  hidePassword: boolean; // Input field's value visibillity.
+
   constructor(
     private dialogRef: MatDialogRef<boolean>,
     private snackBar: MatSnackBar,
-    private configService: ConfigService) {
+    private configService: ConfigService
+  ) {
     this.hidePassword = true;
   }
 

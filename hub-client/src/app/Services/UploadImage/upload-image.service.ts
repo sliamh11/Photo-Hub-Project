@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { PhotoModel } from 'src/app/Models/PhotoModel';
 import { ConfigService } from '../config/config.service';
 import { ErrorHandlerService } from '../ErrorHandler/error-handler.service';
@@ -10,7 +10,7 @@ import { ErrorHandlerService } from '../ErrorHandler/error-handler.service';
 export class UploadImageService {
 
   private URL = this.configService.PHOTOS_URL;
-  private currentPhoto: PhotoModel;
+  private currentPhoto: PhotoModel; // State of the current photo to upload.
 
   constructor(private configService: ConfigService,
     private httpClient: HttpClient,
@@ -31,19 +31,10 @@ export class UploadImageService {
     return this.currentPhoto;
   }
 
-  getCategories = async () => {
-    try {
-      return await this.configService.getCategories();
-    } catch (error) {
-      throw error;
-    }
-  }
-
   postSavePhoto = async (photo: PhotoModel) => {
     try {
       this.setCurrentPhotoData(photo);
-      await this.httpClient.post(`${this.URL}`, this.currentPhoto).toPromise();
-      return true;
+      return await this.httpClient.post(`${this.URL}`, this.currentPhoto).toPromise();
     } catch (error) {
       throw this.errorService.handleError(error);
     }

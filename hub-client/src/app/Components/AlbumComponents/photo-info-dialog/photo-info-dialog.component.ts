@@ -20,11 +20,13 @@ export class PhotoInfoDialogComponent implements OnInit {
   isEditMode: boolean = false;
   categoriesList: ICategory[] = [];
 
-  constructor(@Inject(MAT_DIALOG_DATA) public photo: PhotoModel,
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public photo: PhotoModel,
     private albumService: AlbumService,
     private configService: ConfigService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog) {
+    private dialog: MatDialog
+  ) {
     this.categories = new FormControl();
     this.initCategories();
   }
@@ -58,6 +60,7 @@ export class PhotoInfoDialogComponent implements OnInit {
   }
 
   handleSaveClicked = () => {
+    // Save changes.
     this.isEditMode = false;
     this.updatePhoto();
   }
@@ -70,13 +73,14 @@ export class PhotoInfoDialogComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(newLocation => {
       if (newLocation) {
-        this.photo.location = newLocation.data;
+        this.photo.location = newLocation;
       }
     });
   }
 
   updatePhoto = () => {
     try {
+      // Set updated categories (from formControl) and send a PUT request to the server.
       this.photo.categories = this.categories.value;
       this.albumService.updatePhoto(this.photo, this.fileName);
     } catch (error) {
