@@ -9,42 +9,46 @@ import { UploadImageService } from 'src/app/Services/UploadImage/upload-image.se
   styleUrls: ['./camera.component.css']
 })
 export class CameraComponent implements AfterViewInit {
-  @ViewChild("video") videoRef: ElementRef;
-  @ViewChild('canvas') canvasRef: ElementRef;
+  @ViewChild("video") video: ElementRef;
+  @ViewChild('canvas') canvas: ElementRef;
 
   captures: any[];
   error: any;
   isChosen: boolean;
   currentCaptureIndex: number;
+  isBtnDisabled: boolean;
 
   VIDEO_WIDTH = 480;
   VIDEO_HEIGHT = 360;
 
   constructor(private configService: ConfigService, private service: UploadImageService, private snackBar: MatSnackBar) {
+    this.isBtnDisabled = false;
     this.captures = []
   }
 
-  ngAfterViewInit = async () => {
+  // Must stay as a normal function call and not arrow function (because of 'this').
+  async ngAfterViewInit() {
     await this.setupDevices();
   }
 
   setupDevices = async () => {
     try {
-      if (this.configService.isCameraAllowed()) {
+      if (await this.configService.isCameraAllowed()) {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
           const stream = await navigator.mediaDevices.getUserMedia({
             video: true
           });
           if (stream) {
-            this.videoRef.nativeElement.srcObject = stream;
-            this.videoRef.nativeElement.play();
+            this.video.nativeElement.srcObject = stream;
+            this.video.nativeElement.play();
             this.error = null;
           } else {
             this.snackBar.open("You have no output video device", "Ok");
           }
         }
       } else {
-        this.snackBar.open("Camera is not enabled.", "Ok");
+        this.isBtnDisabled = true;
+        this.snackBar.open("Please allow camera in configuration.", "Ok");
       }
     } catch (e) {
       this.snackBar.open(`Error: ${e.message}`, "Ok");
@@ -53,8 +57,8 @@ export class CameraComponent implements AfterViewInit {
 
   capture = () => {
     try {
-      this.drawImageToCanvas(this.videoRef.nativeElement);
-      let imgUrl = this.canvasRef.nativeElement.toDataURL("image/png");
+      this.drawImageToCanvas(this.video.nativeElement);
+      let imgUrl = this.canvas.nativeElement.toDataURL("image/png");
       let imgId = this.captures.length;
       let currImage = { id: imgId, url: imgUrl };
       this.captures.push(currImage);
@@ -69,7 +73,7 @@ export class CameraComponent implements AfterViewInit {
   }
 
   drawImageToCanvas = (image: any) => {
-    this.canvasRef.nativeElement
+    this.canvas.nativeElement
       .getContext("2d")
       .drawImage(image, 0, 0, this.VIDEO_WIDTH, this.VIDEO_HEIGHT);
   }

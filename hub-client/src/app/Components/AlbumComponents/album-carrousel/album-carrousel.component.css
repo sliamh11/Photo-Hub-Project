@@ -1,0 +1,22 @@
+.main-carrousel-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 91vh;
+}
+
+.carrousel-container{
+    height: 500px;
+    width: 600px;
+    min-height: 250px;
+    min-width: 300px;
+    padding:5px;
+    border: 2px groove black;
+}
+
+.carrousel-container img{
+    height: 500px;
+    width: 600px;
+    min-height: 250px;
+    min-width: 300px;
+}

@@ -3,10 +3,46 @@
     <mat-sidenav #drawer class="sidenav" fixedInViewport>
       <mat-toolbar>Menu</mat-toolbar>
       <mat-nav-list>
-        <a mat-list-item routerLink="/home" (click)="drawer.toggle()">Home</a>
-        <a mat-list-item routerLink="/private-mode" (click)="drawer.toggle()">Enter / Exit Private Mode</a>
-        <a mat-list-item routerLink="/edit-categories" (click)="drawer.toggle()">Edit Categories</a>
-        <a mat-list-item routerLink="/about" (click)="drawer.toggle()">About</a>
+        <!-- Home -->
+          <a mat-list-item routerLink="/home" (click)="drawer.toggle()">
+            Home
+            <mat-icon matSuffix>home</mat-icon>
+          </a>
+        <!-- Enter Private Mode -->
+        <a *ngIf="!isPrivateMode" mat-list-item (click)="drawer.toggle()" (click)="openPrivateModeDialog()">
+          Enter Private Mode
+          <mat-icon matSuffix>lock</mat-icon>
+        </a>
+        <!-- Exit Private Mode -->
+        <a *ngIf="isPrivateMode" mat-list-item (click)="drawer.toggle()" (click)="exitPrivateMode()">
+          Exit Private Mode
+          <mat-icon matSuffix>lock_open</mat-icon>
+        </a>
+        <!-- Upload Image -->
+        <a mat-list-item routerLink="/upload-image" (click)="drawer.toggle()">
+          Upload Image
+          <mat-icon>upload</mat-icon>
+        </a>
+        <!-- Album -->
+        <a mat-list-item routerLink="/album" (click)="drawer.toggle()">
+          Album
+          <mat-icon>collections</mat-icon>
+        </a>
+        <!-- Album Carousel -->
+        <a mat-list-item routerLink="/album-carrousel" (click)="drawer.toggle()">
+          Album Carrousel
+          <mat-icon>view_carousel</mat-icon>
+        </a>
+        <!-- Edit Categories -->
+        <a mat-list-item routerLink="/edit-categories" (click)="drawer.toggle()">
+          Edit Categories
+          <mat-icon>edit_note</mat-icon>
+        </a>
+        <!-- About  -->
+        <a mat-list-item routerLink="/about" (click)="drawer.toggle()">
+          About
+          <mat-icon>info</mat-icon>
+        </a>
       </mat-nav-list>
     </mat-sidenav>
 
@@ -16,7 +52,6 @@
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
 
-        <!-- Logo here (instead of span) -->
         <div class="site-title-container">
           <div>Cosmo's Hub</div>
           <mat-icon>compare</mat-icon>
@@ -24,7 +59,6 @@
       </mat-toolbar>
 
       <!-- Body View -->
-
       <div class="outlet">
         <router-outlet></router-outlet>
       </div>

@@ -26,14 +26,13 @@ import { AlbumSearchComponent } from './Components/AlbumComponents/album-search/
 import { AlbumPhotosComponent } from './Components/AlbumComponents/album-photos/album-photos.component';
 import { AboutComponent } from './Components/about/about.component';
 import { EditCategoriesComponent } from './Components/edit-categories/edit-categories.component';
-import { PrivateModeComponent } from './Components/PrivateMode/private-mode/private-mode.component';
 import { PhotoInfoComponent } from './Components/photo-info/photo-info.component';
 import { AlbumPhotoComponent } from './Components/AlbumComponents/album-photo/album-photo.component';
 import { PhotoInfoDialogComponent } from './Components/AlbumComponents/photo-info-dialog/photo-info-dialog.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PirvateModeDialogComponent } from './Components/PrivateMode/pirvate-mode-dialog/pirvate-mode-dialog.component';
-import { LocationDialogComponent } from './Components/location-dialog/location-dialog.component';
 import { PrivateModeDialogComponent } from './Components/private-mode-dialog/private-mode-dialog.component';
+import { LocationDialogComponent } from './Components/location-dialog/location-dialog.component';
+import { AlbumCarrouselComponent } from './Components/AlbumComponents/album-carrousel/album-carrousel.component';
 
 @NgModule({
   declarations: [
@@ -50,13 +49,12 @@ import { PrivateModeDialogComponent } from './Components/private-mode-dialog/pri
     AlbumPhotosComponent,
     AboutComponent,
     EditCategoriesComponent,
-    PrivateModeComponent,
     PhotoInfoComponent,
     AlbumPhotoComponent,
     PhotoInfoDialogComponent,
-    PirvateModeDialogComponent,
     LocationDialogComponent,
-    PrivateModeDialogComponent
+    PrivateModeDialogComponent,
+    AlbumCarrouselComponent
   ],
   imports: [
     BrowserModule,

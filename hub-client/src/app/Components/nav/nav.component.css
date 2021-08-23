@@ -14,8 +14,8 @@
 }
 
 .sidenav-container > .outlet{
-  position:inherit;
-  scroll-behavior: unset;
+  position:absolute;
+  overflow: hidden;
 }
 
 .sidenav .mat-toolbar {
@@ -39,4 +39,6 @@
   column-gap: 10px;
 }
 
-/* Add - @image less then 700px (width) - smaller font size */
+.mat-nav-list /deep/ .mat-list-item-content{
+  justify-content: space-between;
+}

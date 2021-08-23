@@ -5,7 +5,7 @@
     },
     "albumName": "New Album",
     "allowPrivateMode": true,
-    "allowLocation": false,
+    "allowLocation": true,
     "allowCamera": true,
     "privatePassword": "123"
 }

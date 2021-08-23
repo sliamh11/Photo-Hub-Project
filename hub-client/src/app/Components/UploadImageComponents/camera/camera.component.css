@@ -49,22 +49,29 @@ li{
     overflow-y: hidden;
 }
 
-.image-container :hover:active{
-    opacity: 0.8;
-    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-}
-
 .image-container{
     position: sticky;
 }
 
+.image-container :hover:active{
+    opacity: 0.8;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.image-container img{
+    transition: 0.4s;
+}
+
 .image-container :hover{
+    height: 130px;
+    cursor: pointer;
+}
+
+.image-container .active{
     padding:5px;
     display: inherit;
     border: black;
     border-radius: 3px;
     border-width: 2px;
     border-style: groove;
-    cursor: pointer;
 }

@@ -21,7 +21,7 @@ export class PrivateModeDialogComponent {
   checkPasswordMatch = async (password: string) => {
     try {
       if (await this.configService.checkPasswordsMatch(password)) {
-        this.dialogRef.close({ event: 'close', data: true });
+        this.dialogRef.close(true);
       } else {
         this.snackBar.open("Wrong password.", "Ok");
       }
@@ -29,5 +29,4 @@ export class PrivateModeDialogComponent {
       this.snackBar.open(error.message, "Ok");
     }
   }
-
 }

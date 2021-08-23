@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PirvateModeDialogComponent } from './pirvate-mode-dialog.component';
+import { AlbumCarrouselComponent } from './album-carrousel.component';
 
-describe('PirvateModeDialogComponent', () => {
-  let component: PirvateModeDialogComponent;
-  let fixture: ComponentFixture<PirvateModeDialogComponent>;
+describe('AlbumCarrouselComponent', () => {
+  let component: AlbumCarrouselComponent;
+  let fixture: ComponentFixture<AlbumCarrouselComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PirvateModeDialogComponent ]
+      declarations: [ AlbumCarrouselComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PirvateModeDialogComponent);
+    fixture = TestBed.createComponent(AlbumCarrouselComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

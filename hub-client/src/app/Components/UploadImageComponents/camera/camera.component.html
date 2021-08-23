@@ -4,7 +4,7 @@
     </div>
 
     <div id="button-container" class="container center" cdkDrag>
-        <button class="btn" cdkDragHandle mat-raised-button (click)="capture()">
+        <button class="btn" cdkDragHandle mat-raised-button [disabled]="isBtnDisabled" (click)="capture()">
             <span>Capture </span>
             <mat-icon>center_focus_strong</mat-icon>
         </button>
@@ -17,7 +17,10 @@
             <ul class="container left-right">
                 <li *ngFor="let c of captures">
                     <div class="image-container" (click)="imageClicked($event)">
-                        <img id="{{ c.id }}" class="image" src="{{ c.url }}" height="125">
+                        <img *ngIf="c.id === currentCaptureIndex; else notChosen" id="{{ c.id }}" class="image active" src="{{ c.url }}" height="125">
+                        <ng-template #notChosen>
+                            <img id="{{ c.id }}" class="image" src="{{ c.url }}" height="125">
+                        </ng-template>
                     </div>
                 </li>
             </ul>

@@ -115,7 +115,7 @@ export class ConfigService {
 
   isCameraAllowed = async () => {
     try {
-      return this.httpClient.get(`${this.CONFIG_URL}/camera-allowed`).toPromise();
+      return this.httpClient.get<boolean>(`${this.CONFIG_URL}/camera-allowed`).toPromise();
     } catch (error) {
       throw this.errorService.handleError(error);
     }
@@ -123,9 +123,7 @@ export class ConfigService {
 
   isLocationAllowed = async () => {
     try {
-      console.log();
-      
-      return this.httpClient.get(`${this.CONFIG_URL}/location-allowed`).toPromise();
+      return this.httpClient.get<boolean>(`${this.CONFIG_URL}/location-allowed`).toPromise();
     } catch (error) {
       throw this.errorService.handleError(error);
     }

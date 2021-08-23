@@ -10,20 +10,23 @@ import { PrivateModeDialogComponent } from '../../private-mode-dialog/private-mo
   templateUrl: './album.component.html',
   styleUrls: ['./album.component.css']
 })
-export class AlbumComponent {
+export class AlbumComponent implements OnInit {
 
   isPrivateMode: boolean;
   isFavoriteMode: boolean;
   viewsList: IView[];
 
   constructor(private configService: ConfigService, private albumService: AlbumService, private dialog: MatDialog) {
-    this.init();
+    this.initAlbum();
+  }
+  ngOnInit(): void {
+    // Get notified when private mode changes - to update icons.
     this.configService.onPrivateModeChanged.subscribe((isEnabled) => {
       this.isPrivateMode = isEnabled;
     });
   }
 
-  init = async () => {
+  initAlbum = async () => {
     this.isPrivateMode = this.configService.getPrivateMode();
     this.viewsList = await this.configService.getViewsList();
   }
@@ -33,6 +36,7 @@ export class AlbumComponent {
   }
 
   handleFavoriteClicked = () => {
+    // Notify subscribers that Favorite Mode has changed.
     this.isFavoriteMode = !this.isFavoriteMode;
     this.albumService.onFavoriteModeChanged.emit(this.isFavoriteMode);
   }
@@ -48,6 +52,7 @@ export class AlbumComponent {
   }
 
   handleViewSelected = (view: IView) => {
+    // Notify subscribers that the intended view mode has changed.
     this.albumService.onViewModeChanged.emit(view);
   }
 }
