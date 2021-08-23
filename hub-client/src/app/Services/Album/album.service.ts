@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, EventEmitter } from '@angular/core';
 import { IPhoto } from 'src/app/Models/IPhoto';
 import { PhotoModel } from 'src/app/Models/PhotoModel';
+import { View } from 'src/app/Models/View';
 import { ConfigService } from '../config/config.service';
 import { ErrorHandlerService } from '../ErrorHandler/error-handler.service';
 
@@ -14,10 +15,14 @@ export class AlbumService {
   photos: IPhoto[] = [];
   handleSearchEvent: EventEmitter<any>;
   onPhotosUpdatedEvent: EventEmitter<IPhoto[]>;
+  onFavoriteModeChanged: EventEmitter<boolean>;
+  onViewModeChanged: EventEmitter<View>;
 
   constructor(private httpClient: HttpClient, private errorService: ErrorHandlerService, private configService: ConfigService) {
     this.handleSearchEvent = new EventEmitter<any>();
     this.onPhotosUpdatedEvent = new EventEmitter<IPhoto[]>();
+    this.onFavoriteModeChanged = new EventEmitter<boolean>();
+    this.onViewModeChanged = new EventEmitter<View>();
     this.loadPhotos();
   }
 

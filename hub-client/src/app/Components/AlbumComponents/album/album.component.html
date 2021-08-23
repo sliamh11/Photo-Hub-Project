@@ -6,13 +6,34 @@
         <app-album-photos></app-album-photos>
     </div>
     <div class="bottom-container">
+        <!-- Lock -->
         <div class="lock-container">
-            <div *ngIf="isPrivateMode; else notPrivate">
-                <mat-icon (click)="disablePrivateMode()">lock</mat-icon>
-            </div>
+            <mat-icon *ngIf="isPrivateMode; else notPrivate" class="icon" (click)="disablePrivateMode()">
+                lock
+            </mat-icon>
             <ng-template #notPrivate>
-                <mat-icon (click)="openPrivateModeDialog()">lock_open</mat-icon>
+                <mat-icon class="icon" (click)="openPrivateModeDialog()">lock_open</mat-icon>
             </ng-template>
+        </div>
+        <!-- Favorite -->
+        <div class="heart-container">
+            <mat-icon *ngIf="isFavoriteMode; else notFavorite" class="icon heart-icon"
+                (click)="handleFavoriteClicked()">
+                favorite
+            </mat-icon>
+            <ng-template #notFavorite>
+                <mat-icon class="icon heart-icon" (click)="handleFavoriteClicked()">favorite_border</mat-icon>
+            </ng-template>
+        </div>
+        <div class="views-container">
+            <mat-form-field appearance="fill">
+                <mat-label>Select</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let view of viewsList" [value]="view" (click)="handleViewSelected(view)">
+                        {{view.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
     </div>
 </div>

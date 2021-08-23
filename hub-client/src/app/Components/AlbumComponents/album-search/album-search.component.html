@@ -1,18 +1,18 @@
-    <div class="container center">
-        <mat-form-field appearance="fill">
-            <mat-label>Search By Caption</mat-label>
-            <input #inputCaption type="text" matInput placeholder="Photo's Caption">
-            <mat-icon matSuffix>record_voice_over</mat-icon>
-          </mat-form-field>
+<div class="container center">
+  <mat-form-field appearance="fill">
+    <mat-label>Search By Caption</mat-label>
+    <input [(ngModel)]="captionInput" type="text" matInput placeholder="Photo's Caption">
+    <mat-icon matSuffix>record_voice_over</mat-icon>
+  </mat-form-field>
 
-          <mat-form-field appearance="fill">
-            <mat-label>Search By Category</mat-label>
-            <input #inputCategory type="text" matInput placeholder="Photo's Category">
-            <mat-icon matSuffix>filter</mat-icon>
-          </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Search By Category</mat-label>
+    <input [(ngModel)]="categoryInput" type="text" matInput placeholder="Photo's Category">
+    <mat-icon matSuffix>filter</mat-icon>
+  </mat-form-field>
 
-          <button class="btn" mat-raised-button color="accent" (click)="searchPhoto(inputCaption.value, inputCategory.value)">
-              Search
-              <mat-icon>search</mat-icon>
-             </button>
-    </div>
+  <button class="btn" mat-raised-button color="accent" (click)="searchPhoto()">
+    Search
+    <mat-icon>search</mat-icon>
+  </button>
+</div>

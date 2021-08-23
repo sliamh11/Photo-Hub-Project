@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IPhoto } from 'src/app/Models/IPhoto';
+import { View } from 'src/app/Models/View';
 import { AlbumService } from 'src/app/Services/Album/album.service';
 import { ConfigService } from 'src/app/Services/config/config.service';
 
@@ -12,48 +13,91 @@ import { ConfigService } from 'src/app/Services/config/config.service';
 export class AlbumPhotosComponent implements OnInit {
 
   photos: IPhoto[];
+  viewOptions: View[];
+  isFavoriteMode: boolean;
+  viewMode: View;
 
   constructor(
     private albumService: AlbumService,
     private snackBar: MatSnackBar,
     private configService: ConfigService) {
+    this.albumService
     this.photos = [];
+
+    // Subscribed here because it needs to get the value before AlbumSearchComponent.
+    this.albumService.onFavoriteModeChanged.subscribe((isEnabled) => {
+      this.isFavoriteMode = isEnabled;
+    });
   }
 
   ngOnInit(): void {
     try {
+      // When a new search request has been made.
       this.albumService.handleSearchEvent.subscribe((filterData) => {
         this.filterPhotos(filterData);
       });
 
+      // When the photo's list updates.
       this.albumService.onPhotosUpdatedEvent.subscribe((photos) => {
-        this.photos = photos;
+        this.photos = this.additionalFilters(photos);
       });
+
+      // When view selection changes.
+      this.albumService.onViewModeChanged.subscribe((view) => {
+        this.viewMode = view;
+      })
 
       // If still not loaded (will occur when coming back to the photos album for the second time without reloading the site.)
       if (this.photos.length === 0) {
-        this.photos = this.albumService.photos;
+        this.photos = this.additionalFilters(this.albumService.photos);
       }
     } catch (error) {
       this.snackBar.open(error.message);
     }
   }
 
+  filterPrivateMode = (photosList: IPhoto[]) => {
+    // Get current private mode status.
+    const isPrivateMode = this.configService.getPrivateMode();
+    // Filter accordingly.
+    if (isPrivateMode) {
+      return photosList = photosList.filter((photo) => {
+        return photo.isPrivate;
+      });
+    } else {
+      return photosList = photosList.filter((photo) => {
+        return !photo.isPrivate;
+      });
+    }
+  }
+
+  filterFavoriteMode = (photosList: IPhoto[]) => {
+    if (this.isFavoriteMode) {
+      return photosList = photosList.filter((photo) => {
+        return photo.isFavorite;
+      });
+    }
+    return photosList;
+  }
+
+  // Combination of Private & Favorite modes
+  additionalFilters = (photosList: IPhoto[]) => {
+    photosList = this.filterPrivateMode(photosList);
+    photosList = this.filterFavoriteMode(photosList);
+    return photosList;
+  }
+
   filterPhotos = (filter: any) => {
     try {
-      // If empty - return all
-      if (filter.caption.trim() === "" && filter.categories[0].length === 0) {
-        this.photos = this.albumService.photos;
-        return;
-      }
-
       let filteredPhotos: IPhoto[] = this.albumService.photos;
 
-      // PrivateMode filter
-      if (this.configService.getPrivateMode()) {
-        filteredPhotos = filteredPhotos.filter((photo) => {
-          return photo.isPrivate;
-        });
+      // Private Mode && Favorite Pictures filtering
+      filteredPhotos = this.additionalFilters(filteredPhotos);
+
+      // If empty - return all
+      if (filter.caption.trim() === "" && filter.categories[0].length === 0) {
+        this.photos = filteredPhotos;
+        return;
       }
 
       // Check if string is not empty / whitespaces only

@@ -23,15 +23,26 @@
   transform: translate(-10%,-50%);
 }
 
-.lock-container .mat-icon{
+.bottom-container .heart-container{
+  position:absolute;
+  top:50%;
+  left:80%;
+  transform: translate(-20%,-50%);
+}
+
+.icon{
   font-size: 50px;
 }
 
-.lock-container .mat-icon:hover{
+.icon:hover{
   cursor: pointer;
   opacity: 0.6;
 }
 
-.lock-container .mat-icon:hover:active{
+.icon:hover:active{
   opacity: 0.9;
+}
+
+.heart-icon{
+  color:red;
 }
