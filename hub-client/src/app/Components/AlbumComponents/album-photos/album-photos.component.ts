@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IPhoto } from 'src/app/Models/IPhoto';
-import { View } from 'src/app/Models/View';
+import { IView } from 'src/app/Models/IView';
 import { AlbumService } from 'src/app/Services/Album/album.service';
 import { ConfigService } from 'src/app/Services/config/config.service';
 
@@ -13,20 +13,26 @@ import { ConfigService } from 'src/app/Services/config/config.service';
 export class AlbumPhotosComponent implements OnInit {
 
   photos: IPhoto[];
-  viewOptions: View[];
+  viewOptions: IView[];
   isFavoriteMode: boolean;
-  viewMode: View;
+  viewMode: IView;
 
   constructor(
     private albumService: AlbumService,
     private snackBar: MatSnackBar,
     private configService: ConfigService) {
-    this.albumService
+    this.init();
     this.photos = [];
 
     // Subscribed here because it needs to get the value before AlbumSearchComponent.
     this.albumService.onFavoriteModeChanged.subscribe((isEnabled) => {
       this.isFavoriteMode = isEnabled;
+    });
+  }
+
+  init = () => {
+    this.configService.getSelectedView().subscribe((view) => {
+      this.viewMode = view;
     });
   }
 

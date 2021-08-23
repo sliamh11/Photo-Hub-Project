@@ -1,10 +1,1 @@
-[
-    {
-        "id": 0,
-        "name": "List"
-    },
-    {
-        "id": 1,
-        "name": "Grid"
-    }
-]
+[{"id":0,"name":"List"},{"id":1,"name":"Grid"}]

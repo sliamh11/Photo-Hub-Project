@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ConfigService } from 'src/app/Services/config/config.service';
@@ -8,12 +8,9 @@ import { ConfigService } from 'src/app/Services/config/config.service';
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.css']
 })
-export class WelcomeComponent implements OnInit {
+export class WelcomeComponent{
 
   constructor(private router: Router, private configService: ConfigService, private snackBar: MatSnackBar) { }
-
-  ngOnInit(): void {
-  }
 
   async handleClick() {
     try {

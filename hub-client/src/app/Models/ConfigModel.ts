@@ -1,14 +1,14 @@
-import { View } from "./View";
+import { IView } from "./IView";
 
 export class ConfigModel {
-    selectedView: View;
+    selectedView: IView;
     albumName: string;
     allowLocation: boolean;
     allowCamera: boolean;
     allowPrivateMode: boolean;
     privatePassword: string;
 
-    constructor(view:View, albumName:string, allowPrivateMode: boolean, allowLocation: boolean, allowCamera:boolean, password: string = null) {
+    constructor(view:IView, albumName:string, allowPrivateMode: boolean, allowLocation: boolean, allowCamera:boolean, password: string = null) {
         this.selectedView = view;
         this.albumName = albumName;
         this.allowPrivateMode = allowPrivateMode;

@@ -1,4 +1,4 @@
-export interface View{
+export interface IView{
     id: number,
     name: string
   }

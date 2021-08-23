@@ -84,15 +84,18 @@ class ConfigService {
 
     getConfigFileData = async () => {
         try {
-            return JSON.parse(await filesService.readFileAsync(this.CONFIG_PATH));
+            if (await this.isConfigDataExists()) {
+                return JSON.parse(await filesService.readFileAsync(this.CONFIG_PATH));
+            }
+            throw new Error("Configuration file's data doesn't exist.");
         } catch (error) {
             throw error;
         }
     }
 
-    getViewsListAsync = async () => {
+    getViewsList = async () => {
         try {
-            return await this.getDataFromFileAsync(this.VIEWS_PATH);
+            return await this.getDataFromFile(this.VIEWS_PATH);
         } catch (error) {
             throw error;
         }
@@ -107,15 +110,15 @@ class ConfigService {
         }
     }
 
-    getCategoriesAsync = async () => {
+    getCategories = async () => {
         try {
-            return await this.getDataFromFileAsync(this.CATEGORIES_PATH);
+            return await this.getDataFromFile(this.CATEGORIES_PATH);
         } catch (error) {
             throw error;
         }
     }
 
-    postCategoriesAsync = async (updatedCategories) => {
+    postCategories = async (updatedCategories) => {
         try {
             // reset categories ID (in case the order changed).
             for (let index = 0; index < updatedCategories.length; index++) {
@@ -128,7 +131,7 @@ class ConfigService {
         }
     }
 
-    getDataFromFileAsync = async (filePath) => {
+    getDataFromFile = async (filePath) => {
         try {
             return JSON.parse(await filesService.readFileAsync(filePath));
         } catch (error) {
@@ -138,11 +141,8 @@ class ConfigService {
 
     isPrivateEnabled = async () => {
         try {
-            if (await this.isConfigDataExists()) {
-                const { allowPrivateMode } = await this.getConfigFileData();
-                return allowPrivateMode;
-            }
-            return false;
+            const { allowPrivateMode } = await this.getConfigFileData();
+            return allowPrivateMode;
         } catch (error) {
             throw error;
         }
@@ -160,6 +160,32 @@ class ConfigService {
         }
     }
 
+    getSelectedView = async () => {
+        try {
+            const { selectedView } = await this.getConfigFileData();
+            return selectedView;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    isCameraAllowed = async () => {
+        try {
+            const { allowCamera } = await this.getConfigFileData();
+            return allowCamera;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    isLocationAllowed = async () => {
+        try {
+            const { allowLocation } = await this.getConfigFileData();
+            return allowLocation;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = new ConfigService();

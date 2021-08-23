@@ -4,6 +4,7 @@ import { } from 'googlemaps';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ILocation } from 'src/app/Models/ILocation';
 import { MapsAPILoader } from '@agm/core';
+import { ConfigService } from 'src/app/Services/config/config.service';
 
 @Component({
   selector: 'app-location-dialog',
@@ -21,6 +22,7 @@ export class LocationDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public location: ILocation,
+    private configService: ConfigService,
     private mapsAPILoader: MapsAPILoader,
     public dialogRef: MatDialogRef<any>,
     private ngZone: NgZone,
@@ -53,7 +55,17 @@ export class LocationDialogComponent implements OnInit {
     });
   }
 
-  setCurrentLocation = () => {
+  setCurrentLocation = async () => {
+    // If location is not enabled in config file - notify user and close window.
+    if (!await this.configService.isLocationAllowed()) {
+      this.searchElementRef.nativeElement.disabled = true;
+      const snackRef = this.snackBar.open("Location not allowed.", "Ok");
+      snackRef.onAction().subscribe(() => {
+        this.dialogRef.close({ event: 'close', data: false });
+      });
+      return;
+    }
+
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
 

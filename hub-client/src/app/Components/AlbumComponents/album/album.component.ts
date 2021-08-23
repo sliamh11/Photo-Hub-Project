@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { View } from 'src/app/Models/View';
+import { IView } from 'src/app/Models/IView';
 import { AlbumService } from 'src/app/Services/Album/album.service';
 import { ConfigService } from 'src/app/Services/config/config.service';
 import { PrivateModeDialogComponent } from '../../private-mode-dialog/private-mode-dialog.component';
@@ -14,7 +14,7 @@ export class AlbumComponent {
 
   isPrivateMode: boolean;
   isFavoriteMode: boolean;
-  viewsList: View[];
+  viewsList: IView[];
 
   constructor(private configService: ConfigService, private albumService: AlbumService, private dialog: MatDialog) {
     this.init();
@@ -25,7 +25,7 @@ export class AlbumComponent {
 
   init = async () => {
     this.isPrivateMode = this.configService.getPrivateMode();
-    this.viewsList = await this.configService.getViewsList()
+    this.viewsList = await this.configService.getViewsList();
   }
 
   disablePrivateMode = () => {
@@ -47,7 +47,7 @@ export class AlbumComponent {
     });
   }
 
-  handleViewSelected = (view: View) => {
+  handleViewSelected = (view: IView) => {
     this.albumService.onViewModeChanged.emit(view);
   }
 }

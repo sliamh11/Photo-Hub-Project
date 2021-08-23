@@ -3,9 +3,9 @@
         "id": 1,
         "name": "Grid"
     },
-    "albumName": "My Album",
+    "albumName": "New Album",
     "allowPrivateMode": true,
-    "allowLocation": true,
+    "allowLocation": false,
     "allowCamera": true,
     "privatePassword": "123"
 }

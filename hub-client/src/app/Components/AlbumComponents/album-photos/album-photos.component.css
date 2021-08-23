@@ -13,3 +13,7 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+
+  .image-gallery.list{
+      flex-direction: column;
+  }

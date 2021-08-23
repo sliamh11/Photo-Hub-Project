@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigModel } from 'src/app/Models/ConfigModel';
-import { View } from 'src/app/Models/View';
+import { IView } from 'src/app/Models/IView';
 import { ConfigService } from 'src/app/Services/config/config.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-config',
@@ -12,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ConfigComponent implements OnInit {
 
-  viewsList: View[];
+  viewsList: IView[];
   selectedView: any;
   albumName: string;
   hide: boolean = true;
@@ -21,28 +22,29 @@ export class ConfigComponent implements OnInit {
   allowCamera: boolean = false;
   privatePassword: string;
 
-  constructor(private service: ConfigService, private router: Router, private snackBar: MatSnackBar) {
+  constructor(private configService: ConfigService, private router: Router, private snackBar: MatSnackBar) {
     this.albumName = null;
+    this.viewsList = [];
+    this.loadViewsList();
   }
 
   // Make it that way that the first value will be the default value (and show it).
   ngOnInit(): void {
-    this.loadViewsList();
   }
 
-  async loadViewsList() {
-    this.viewsList = await this.service.getViewsList();
+  loadViewsList = async () => {
+    this.viewsList = await this.configService.getViewsList();
     this.selectedView = this.viewsList[0];
   }
 
-  handleViewSelected(id) {
-    this.selectedView = this.viewsList[id];
+  handleViewSelected = (view: IView) => {
+    this.selectedView = this.viewsList[view.id];
   }
 
-  async handleClickNext() {
+  handleClickNext = async () => {
     try {
       let configuration = new ConfigModel(this.selectedView, this.albumName, this.allowPrivateMode, this.allowLocation, this.allowCamera, this.privatePassword);
-      if (await this.service.postConfiguration(configuration)) {
+      if (await this.configService.postConfiguration(configuration)) {
         this.router.navigate(["upload-image"]);
       }
       else {

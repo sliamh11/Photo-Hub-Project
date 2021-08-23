@@ -50,7 +50,7 @@ class FilesService {
             return new Promise(async (res, rej) => {
                 if (await this.isFileExistAsync(filePath)) {
                     fs.readFile(filePath, { encoding: "utf8" }, (err, data) => {
-                        return err ? rej(err) : res(data);
+                        return res(err ? false : data);
                     });
                 }
                 else {

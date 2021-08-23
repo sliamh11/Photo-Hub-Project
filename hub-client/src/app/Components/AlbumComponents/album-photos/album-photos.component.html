@@ -1,7 +1,16 @@
-<div class="container">
-    <div class="image-gallery">
+<div *ngIf="viewMode && viewMode.name === 'List'; else gridBlock" class="container">
+    <div class="image-gallery list">
         <div *ngFor="let photo of photos">
             <app-album-photo [photo]="photo"></app-album-photo>
         </div>
     </div>
 </div>
+<ng-template #gridBlock>
+    <div class="container">
+        <div class="image-gallery">
+            <div *ngFor="let photo of photos">
+                <app-album-photo [photo]="photo"></app-album-photo>
+            </div>
+        </div>
+    </div>
+</ng-template>

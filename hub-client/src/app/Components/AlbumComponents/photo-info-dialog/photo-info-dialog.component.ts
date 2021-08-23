@@ -16,7 +16,7 @@ import { LocationDialogComponent } from '../../location-dialog/location-dialog.c
 export class PhotoInfoDialogComponent implements OnInit {
 
   fileName: string = this.photo.caption; // saving caption in case caption will be changed (original must be sent to server).
-  categories = new FormControl();
+  categories: FormControl;
   isEditMode: boolean = false;
   categoriesList: ICategory[] = [];
 
@@ -25,6 +25,7 @@ export class PhotoInfoDialogComponent implements OnInit {
     private configService: ConfigService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog) {
+    this.categories = new FormControl();
     this.initCategories();
   }
   ngOnInit(): void {

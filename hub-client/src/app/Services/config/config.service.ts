@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { View } from 'src/app/Models/View';
+import { IView } from 'src/app/Models/IView';
 import { ConfigModel } from 'src/app/Models/ConfigModel';
 import { ICategory } from 'src/app/Models/ICategory';
 import { ErrorHandlerService } from '../ErrorHandler/error-handler.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class ConfigService {
 
   onPrivateModeChanged: EventEmitter<boolean>;
 
-  constructor(private httpClient: HttpClient, private errorService: ErrorHandlerService) {
+  constructor(private httpClient: HttpClient, private errorService: ErrorHandlerService, private router: Router) {
     this.onPrivateModeChanged = new EventEmitter<boolean>();
     this.init();
   }
@@ -39,7 +40,7 @@ export class ConfigService {
 
   isConfigDataExists = async () => {
     try {
-      return await this.httpClient.get(`${this.CONFIG_URL}/is-data-exists`).toPromise();
+      return await this.httpClient.get<boolean>(`${this.CONFIG_URL}/is-data-exists`).toPromise();
     } catch (error) {
       throw this.errorService.handleError(error);
     }
@@ -47,7 +48,7 @@ export class ConfigService {
 
   getViewsList = async () => {
     try {
-      return await this.httpClient.get<View[]>(`${this.CONFIG_URL}/views`).toPromise();
+      return await this.httpClient.get<IView[]>(`${this.CONFIG_URL}/views`).toPromise();
     } catch (error) {
       throw this.errorService.handleError(error);
     }
@@ -99,6 +100,32 @@ export class ConfigService {
         password: password
       }
       return await this.httpClient.post(`${this.CONFIG_URL}/private-mode`, data).toPromise();
+    } catch (error) {
+      throw this.errorService.handleError(error);
+    }
+  }
+
+  getSelectedView = () => {
+    try {
+      return this.httpClient.get<IView>(`${this.CONFIG_URL}/views/selected-view`);
+    } catch (error) {
+      throw this.errorService.handleError(error);
+    }
+  }
+
+  isCameraAllowed = async () => {
+    try {
+      return this.httpClient.get(`${this.CONFIG_URL}/camera-allowed`).toPromise();
+    } catch (error) {
+      throw this.errorService.handleError(error);
+    }
+  }
+
+  isLocationAllowed = async () => {
+    try {
+      console.log();
+      
+      return this.httpClient.get(`${this.CONFIG_URL}/location-allowed`).toPromise();
     } catch (error) {
       throw this.errorService.handleError(error);
     }
