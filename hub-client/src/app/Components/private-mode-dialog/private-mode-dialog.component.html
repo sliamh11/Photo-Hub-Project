@@ -1,0 +1,21 @@
+<div class="private-mode-container">
+    <div class="title-container">
+        Private Mode Access
+    </div>
+
+    <div class="input-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Enter Private Password</mat-label>
+            <input #inputPassword matInput [type]="hidePassword ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hidePassword">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <button mat-raised-button color="accent" (click)="checkPasswordMatch(inputPassword.value)">
+            Get Access
+            <mat-icon>lock</mat-icon>
+        </button>
+    </div>
+</div>

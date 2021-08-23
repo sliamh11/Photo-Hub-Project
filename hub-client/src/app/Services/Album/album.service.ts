@@ -26,7 +26,6 @@ export class AlbumService {
   }
 
   loadPhotos = async () => {
-
     this.photos = await this.getPhotos();
     this.onPhotosUpdatedEvent.emit(this.photos);
   }

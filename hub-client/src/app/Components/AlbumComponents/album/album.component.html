@@ -1,9 +1,18 @@
-<div class="main-grid">
-    <div class="container center">
+<div class="main-album-grid">
+    <div class="center">
         <app-album-search></app-album-search>
     </div>
-    <div class="container center">
+    <div class="center">
         <app-album-photos></app-album-photos>
     </div>
-    <div></div>
+    <div class="bottom-container">
+        <div class="lock-container">
+            <div *ngIf="isPrivateMode; else notPrivate">
+                <mat-icon (click)="disablePrivateMode()">lock</mat-icon>
+            </div>
+            <ng-template #notPrivate>
+                <mat-icon (click)="openPrivateModeDialog()">lock_open</mat-icon>
+            </ng-template>
+        </div>
+    </div>
 </div>

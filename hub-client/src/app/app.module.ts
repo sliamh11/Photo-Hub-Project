@@ -33,6 +33,7 @@ import { PhotoInfoDialogComponent } from './Components/AlbumComponents/photo-inf
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PirvateModeDialogComponent } from './Components/PrivateMode/pirvate-mode-dialog/pirvate-mode-dialog.component';
 import { LocationDialogComponent } from './Components/location-dialog/location-dialog.component';
+import { PrivateModeDialogComponent } from './Components/private-mode-dialog/private-mode-dialog.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { LocationDialogComponent } from './Components/location-dialog/location-d
     AlbumPhotoComponent,
     PhotoInfoDialogComponent,
     PirvateModeDialogComponent,
-    LocationDialogComponent
+    LocationDialogComponent,
+    PrivateModeDialogComponent
   ],
   imports: [
     BrowserModule,

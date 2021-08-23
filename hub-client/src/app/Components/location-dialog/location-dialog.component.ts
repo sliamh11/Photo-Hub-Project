@@ -57,12 +57,8 @@ export class LocationDialogComponent implements OnInit {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
 
-        console.log("Location:");
-        console.log(this.location);
-
         // Check if object isn't empty.
         if (this.location && Object.keys(this.location).length > 0) {
-
           this.latitude = this.location.lat;
           this.longitude = this.location.lng;
           this.address = this.location.address;

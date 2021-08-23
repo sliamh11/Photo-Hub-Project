@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IPhoto } from 'src/app/Models/IPhoto';
 import { AlbumService } from 'src/app/Services/Album/album.service';
+import { ConfigService } from 'src/app/Services/config/config.service';
 
 @Component({
   selector: 'app-album-photos',
@@ -12,7 +13,10 @@ export class AlbumPhotosComponent implements OnInit {
 
   photos: IPhoto[];
 
-  constructor(private albumService: AlbumService, private snackBar: MatSnackBar) {
+  constructor(
+    private albumService: AlbumService,
+    private snackBar: MatSnackBar,
+    private configService: ConfigService) {
     this.photos = [];
   }
 
@@ -38,12 +42,19 @@ export class AlbumPhotosComponent implements OnInit {
   filterPhotos = (filter: any) => {
     try {
       // If empty - return all
-      if (filter.caption === "" && filter.categories[0].length === 0) {
+      if (filter.caption.trim() === "" && filter.categories[0].length === 0) {
         this.photos = this.albumService.photos;
         return;
       }
 
       let filteredPhotos: IPhoto[] = this.albumService.photos;
+
+      // PrivateMode filter
+      if (this.configService.getPrivateMode()) {
+        filteredPhotos = filteredPhotos.filter((photo) => {
+          return photo.isPrivate;
+        });
+      }
 
       // Check if string is not empty / whitespaces only
       if (/\S/.test(filter.caption)) {

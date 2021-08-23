@@ -31,4 +31,12 @@
   justify-content: space-between;
 }
 
+.site-title-container{
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  flex-direction: row;
+  column-gap: 10px;
+}
+
 /* Add - @image less then 700px (width) - smaller font size */

@@ -31,7 +31,7 @@ export class UploadImageService {
     return this.currentPhoto;
   }
 
-  async getCategories() {
+  getCategories = async () => {
     try {
       return await this.configService.getCategories();
     } catch (error) {

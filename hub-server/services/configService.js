@@ -44,17 +44,17 @@ class ConfigService {
     // Fill the configuration's basic files with base data.
     setBasicDataConfigFiles = async () => {
         try {
-            let views = [{ id: 0, name: "List" }, { id: 1, name: "Grid" }];
-            let categories = [{ id: 0, name: "Fun" }, { id: 1, name: "Home" }, { id: 2, name: "Nature" }];
+            const views = [{ id: 0, name: "List" }, { id: 1, name: "Grid" }];
+            const categories = [{ id: 0, name: "Fun" }, { id: 1, name: "Home" }, { id: 2, name: "Nature" }];
 
             let filesBase = [
-                { path: this.VIEWS_PATH, title: "views", data: views },
-                { path: this.CATEGORIES_PATH, title: "categories", data: categories }
+                { path: this.VIEWS_PATH, data: views },
+                { path: this.CATEGORIES_PATH, data: categories }
             ];
 
             filesBase.forEach(async (fileInfo) => {
                 if (!await this.isFileDataExists(fileInfo.path)) {
-                    let jsonObj = JSON.parse(`{"${fileInfo.title}": ${JSON.stringify(fileInfo.data)}}`);
+                    let jsonObj = JSON.parse(`${JSON.stringify(fileInfo.data)}`);
                     await filesService.writeToJsonFileAsync(fileInfo.path, jsonObj);
                 }
             });
@@ -74,11 +74,17 @@ class ConfigService {
     }
 
     // Insert data into config.json.
-    setConfigFile = async (bodyData) => {
+    setConfigFileData = async (bodyData) => {
         try {
-            await filesService.writeToJsonFileAsync(this.CONFIG_PATH, bodyData)
-            console.log("Wrote to file successfully");
-            return true;
+            return await filesService.writeToJsonFileAsync(this.CONFIG_PATH, bodyData)
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    getConfigFileData = async () => {
+        try {
+            return JSON.parse(await filesService.readFileAsync(this.CONFIG_PATH));
         } catch (error) {
             throw error;
         }
@@ -86,8 +92,7 @@ class ConfigService {
 
     getViewsListAsync = async () => {
         try {
-            let result = await this.getDataFromFileAsync(this.VIEWS_PATH);
-            return result.views;
+            return await this.getDataFromFileAsync(this.VIEWS_PATH);
         } catch (error) {
             throw error;
         }
@@ -95,12 +100,7 @@ class ConfigService {
 
     isFileDataExists = async (filePath) => {
         try {
-            if (await filesService.readFileAsync(filePath)) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            return await filesService.readFileAsync(filePath) ? true : false;
         }
         catch (error) {
             throw error;
@@ -128,12 +128,33 @@ class ConfigService {
         }
     }
 
-    // check if it works
     getDataFromFileAsync = async (filePath) => {
         try {
-            // let result = await filesService.readFileAsync(filePath);
-            // let parsedResult = JSON.parse(await filesService.readFileAsync(filePath));
             return JSON.parse(await filesService.readFileAsync(filePath));
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    isPrivateEnabled = async () => {
+        try {
+            if (await this.isConfigDataExists()) {
+                const { allowPrivateMode } = await this.getConfigFileData();
+                return allowPrivateMode;
+            }
+            return false;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    checkPasswordsMatch = async (password) => {
+        try {
+            const { allowPrivateMode, privatePassword } = await this.getConfigFileData();
+            if (allowPrivateMode) {
+                return password === privatePassword;
+            }
+            throw new Error("Private Mode is not enabled.");
         } catch (error) {
             throw error;
         }

@@ -1,13 +1,37 @@
-.main-grid{
+.main-album-grid{
     display: grid;
-    grid-template-rows: 30vh 50vh 5vh;
-}
-
-.container{
-    display: flex;
+    grid-template-rows: 30vh 50vh 11vh;
+    height: 91vh;
+    position: relative;
 }
 
 .center{
+  display: flex;
   align-items: center;
   justify-content: center;  
+}
+
+.main-album-grid .bottom-container{
+  position:relative;
+  width: 100%;
+}
+
+.bottom-container .lock-container{
+  position:absolute;
+  top:50%;
+  left:90%;
+  transform: translate(-10%,-50%);
+}
+
+.lock-container .mat-icon{
+  font-size: 50px;
+}
+
+.lock-container .mat-icon:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.lock-container .mat-icon:hover:active{
+  opacity: 0.9;
 }

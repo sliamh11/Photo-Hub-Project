@@ -1,31 +1,34 @@
-    <div class="wrapper">
-    <mat-sidenav-container class="sidenav-container">
-      <mat-sidenav #drawer class="sidenav" fixedInViewport>
-        <mat-toolbar>Menu</mat-toolbar>
-        <mat-nav-list>
-          <a mat-list-item routerLink="/" (click)="drawer.toggle()">Home</a>
-          <a mat-list-item routerLink="/private-mode" (click)="drawer.toggle()">Enter / Exit Private Mode</a>
-          <a mat-list-item routerLink="/edit-categories" (click)="drawer.toggle()">Edit Categories</a>
-          <a mat-list-item routerLink="/about" (click)="drawer.toggle()">About</a>
-        </mat-nav-list>
-      </mat-sidenav>
+<div class="wrapper">
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport>
+      <mat-toolbar>Menu</mat-toolbar>
+      <mat-nav-list>
+        <a mat-list-item routerLink="/" (click)="drawer.toggle()">Home</a>
+        <a mat-list-item routerLink="/private-mode" (click)="drawer.toggle()">Enter / Exit Private Mode</a>
+        <a mat-list-item routerLink="/edit-categories" (click)="drawer.toggle()">Edit Categories</a>
+        <a mat-list-item routerLink="/about" (click)="drawer.toggle()">About</a>
+      </mat-nav-list>
+    </mat-sidenav>
 
-      <mat-sidenav-content>
-        <mat-toolbar color="primary">
-          <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-          </button>
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
 
-          <!-- Logo here (instead of span) -->
-          <span>hub-project logo</span>
-        </mat-toolbar>
-
-        <!-- Body View -->
-        
-        <div class="outlet">
-          <router-outlet></router-outlet>
+        <!-- Logo here (instead of span) -->
+        <div class="site-title-container">
+          <div>Cosmo's Hub</div>
+          <mat-icon>compare</mat-icon>
         </div>
-        
-      </mat-sidenav-content>
-    </mat-sidenav-container>
-  </div>
+      </mat-toolbar>
+
+      <!-- Body View -->
+
+      <div class="outlet">
+        <router-outlet></router-outlet>
+      </div>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

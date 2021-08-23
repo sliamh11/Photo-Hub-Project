@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { View } from 'src/app/Models/View';
 import { ConfigModel } from 'src/app/Models/ConfigModel';
 import { ICategory } from 'src/app/Models/ICategory';
@@ -14,7 +14,27 @@ export class ConfigService {
   CONFIG_URL = "http://localhost:5000/api/config";
   PHOTOS_URL = "http://localhost:5000/api/photos";
 
+  // Private Mode
+  private isPrivateModeEnabled = false;
+  private isPrivateMode = false;
+
+  onPrivateModeChanged: EventEmitter<boolean>;
+
   constructor(private httpClient: HttpClient, private errorService: ErrorHandlerService) {
+    this.onPrivateModeChanged = new EventEmitter<boolean>();
+    this.init();
+  }
+
+  private init = async () => {
+    this.isPrivateModeEnabled = await this.getPrivateEnabled();
+  }
+
+  private getPrivateEnabled = async () => {
+    try {
+      return await this.httpClient.get<boolean>(`${this.CONFIG_URL}/private-mode`).toPromise();
+    } catch (error) {
+      throw this.errorService.handleError(error)
+    }
   }
 
   isConfigDataExists = async () => {
@@ -49,9 +69,36 @@ export class ConfigService {
     }
   }
 
-  async postConfiguration(config: ConfigModel) {
+  postConfiguration = async (config: ConfigModel) => {
     try {
-      return await this.httpClient.post(`${this.CONFIG_URL}`, config).toPromise();
+      // If successfully posted the config data, set isPrivateModeEnabled to it's updated value.
+      if (await this.httpClient.post(`${this.CONFIG_URL}`, config).toPromise()) {
+        this.isPrivateModeEnabled = config.allowPrivateMode;
+        return true;
+      }
+      return false;
+    } catch (error) {
+      throw this.errorService.handleError(error);
+    }
+  }
+
+  getPrivateMode = () => {
+    return this.isPrivateModeEnabled ? this.isPrivateMode : false;
+  }
+
+  setPrivateMode = (isEnabled: boolean) => {
+    if (this.isPrivateModeEnabled) {
+      this.isPrivateMode = isEnabled;
+      this.onPrivateModeChanged.emit(this.isPrivateMode);
+    }
+  }
+
+  checkPasswordsMatch = async (password: string) => {
+    try {
+      const data = {
+        password: password
+      }
+      return await this.httpClient.post(`${this.CONFIG_URL}/private-mode`, data).toPromise();
     } catch (error) {
       throw this.errorService.handleError(error);
     }
