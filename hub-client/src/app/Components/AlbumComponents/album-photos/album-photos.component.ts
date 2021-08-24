@@ -20,7 +20,8 @@ export class AlbumPhotosComponent implements OnInit {
   constructor(
     private albumService: AlbumService,
     private snackBar: MatSnackBar,
-    private configService: ConfigService) {
+    private configService: ConfigService
+    ) {
     this.loadViewMode();
     this.photos = [];
 

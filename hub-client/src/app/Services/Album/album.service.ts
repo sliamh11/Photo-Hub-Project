@@ -1,15 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter, OnInit } from '@angular/core';
 import { IPhoto } from 'src/app/Models/IPhoto';
 import { PhotoModel } from 'src/app/Models/PhotoModel';
 import { IView } from 'src/app/Models/IView';
 import { ConfigService } from '../config/config.service';
 import { ErrorHandlerService } from '../ErrorHandler/error-handler.service';
+import { UploadImageService } from '../UploadImage/upload-image.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AlbumService {
+export class AlbumService implements OnInit {
 
   URL = this.configService.PHOTOS_URL;
   photos: IPhoto[] = [];
@@ -18,7 +19,12 @@ export class AlbumService {
   onFavoriteModeChanged: EventEmitter<boolean>;
   onViewModeChanged: EventEmitter<IView>;
 
-  constructor(private httpClient: HttpClient, private errorService: ErrorHandlerService, private configService: ConfigService) {
+  constructor(
+    private httpClient: HttpClient,
+    private errorService: ErrorHandlerService,
+    private configService: ConfigService,
+    private uploadService: UploadImageService
+  ) {
     this.handleSearchEvent = new EventEmitter<any>();
     this.onPhotosUpdatedEvent = new EventEmitter<IPhoto[]>();
     this.onFavoriteModeChanged = new EventEmitter<boolean>();
@@ -26,7 +32,15 @@ export class AlbumService {
     this.loadPhotos();
   }
 
+  ngOnInit(): void {
+    // Called when a new photo has been uploaded.
+    this.uploadService.onPhotoUploaded.subscribe(() => {
+      this.loadPhotos();
+    });
+  }
+
   handleSearch = (filterData: Object) => {
+    // Called when user clicks on Search Button is search component.
     this.handleSearchEvent.emit(filterData);
   }
 

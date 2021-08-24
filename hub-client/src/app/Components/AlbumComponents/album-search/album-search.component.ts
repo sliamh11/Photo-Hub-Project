@@ -12,7 +12,10 @@ export class AlbumSearchComponent implements OnInit {
   captionInput: string;
   categoryInput: string;
 
-  constructor(private albumService: AlbumService, private configService: ConfigService) {
+  constructor(
+    private albumService: AlbumService,
+     private configService: ConfigService,
+     ) {
     this.captionInput = "";
     this.categoryInput = "";
   }

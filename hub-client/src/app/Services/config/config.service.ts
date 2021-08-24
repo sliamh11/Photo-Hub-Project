@@ -4,7 +4,6 @@ import { IView } from 'src/app/Models/IView';
 import { ConfigModel } from 'src/app/Models/ConfigModel';
 import { ICategory } from 'src/app/Models/ICategory';
 import { ErrorHandlerService } from '../ErrorHandler/error-handler.service';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +17,10 @@ export class ConfigService {
   private isPrivateMode = false;
   onPrivateModeChanged: EventEmitter<boolean>;
 
-  constructor(private httpClient: HttpClient, private errorService: ErrorHandlerService, private router: Router) {
+  constructor(
+    private httpClient: HttpClient,
+    private errorService: ErrorHandlerService
+    ) {
     this.onPrivateModeChanged = new EventEmitter<boolean>();
     this.getPrivateEnabled();
   }
@@ -30,7 +32,8 @@ export class ConfigService {
     try {
       this.isPrivateModeEnabled = await this.httpClient.get<boolean>(`${this.CONFIG_URL}/private-mode`).toPromise();
     } catch (error) {
-      throw this.errorService.handleError(error)
+      // No need to throw back the error because this function only used in this service's ctor.
+      // Also, the error is only ment for logging and not for UI, therefor - only catching it so the app wont crash.
     }
   }
 
