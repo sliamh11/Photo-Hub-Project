@@ -44,17 +44,20 @@ class ConfigService {
     // Fill the configuration's basic files with base data.
     setBasicDataConfigFiles = async () => {
         try {
+            // Basic Data
             const views = [{ id: 0, name: "List" }, { id: 1, name: "Grid" }];
             const categories = [{ id: 0, name: "Fun" }, { id: 1, name: "Home" }, { id: 2, name: "Nature" }];
 
-            let filesBase = [
+            // Array of file path + data objects.
+            const filesBase = [
                 { path: this.VIEWS_PATH, data: views },
                 { path: this.CATEGORIES_PATH, data: categories }
             ];
 
+            // Create files
             filesBase.forEach(async (fileInfo) => {
                 if (!await this.isFileDataExists(fileInfo.path)) {
-                    let jsonObj = JSON.parse(`${JSON.stringify(fileInfo.data)}`);
+                    const jsonObj = JSON.parse(`${JSON.stringify(fileInfo.data)}`);
                     await filesService.writeToJsonFileAsync(fileInfo.path, jsonObj);
                 }
             });
@@ -85,7 +88,7 @@ class ConfigService {
     getConfigFileData = async () => {
         try {
             if (await this.isConfigDataExists()) {
-                return JSON.parse(await filesService.readFileAsync(this.CONFIG_PATH));
+                return await this.getDataFromFile(this.CONFIG_PATH);
             }
             throw new Error("Configuration file's data doesn't exist.");
         } catch (error) {
@@ -131,6 +134,7 @@ class ConfigService {
         }
     }
 
+    // Generic function for getting data from files.
     getDataFromFile = async (filePath) => {
         try {
             return JSON.parse(await filesService.readFileAsync(filePath));

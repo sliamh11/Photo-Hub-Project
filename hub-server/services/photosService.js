@@ -6,7 +6,8 @@ class PhotosService {
     PHOTOS_PATH = "assets/photos/files/photos.json";
     UPLOADS_PATH = "assets/photos/uploads";
 
-    isPhotosFileExist = async () => {
+    // Check if photos.json exist.
+    isPhotosJsonExist = async () => {
         try {
             return await filesService.isFileExistAsync(this.PHOTOS_PATH);
         } catch (error) {
@@ -14,18 +15,19 @@ class PhotosService {
         }
     }
 
-    // Create the photos.json file
+    // Create the photos.json file (if doesn't exis).
     initPhotosFile = async () => {
         try {
-            if (!await this.isPhotosFileExist()) {
+            if (!await this.isPhotosJsonExist()) {
                 await filesService.createNewFileAsync(this.PHOTOS_PATH);
-                await filesService.writeToJsonFileAsync(this.PHOTOS_PATH, JSON.parse(`{"photos": []}`));
+                await filesService.writeToJsonFileAsync(this.PHOTOS_PATH, JSON.parse("[]"));
             }
         } catch (error) {
             throw error;
         }
     }
 
+    // Creates a buffer from base64 and adds a new image file to Uploads directory. 
     addPhotoToUploads = async (photoData) => {
         try {
             const data = photoData.src.replace(/^data:image\/\w+;base64,/, "");
@@ -43,16 +45,18 @@ class PhotosService {
         }
     }
 
+    // Adds the photo data to the json file
     addPhotoToJson = async (updatedPhotoData) => {
         try {
-            let fileData = JSON.parse(await filesService.readFileAsync(this.PHOTOS_PATH));
-            fileData.photos.push(updatedPhotoData);
-            return await filesService.writeToJsonFileAsync(this.PHOTOS_PATH, fileData);
+            const photosJson = await this.readPhotosJson();
+            photosJson.push(updatedPhotoData);
+            return await filesService.writeToJsonFileAsync(this.PHOTOS_PATH, photosJson);
         } catch (error) {
             throw error;
         }
     }
 
+    // Manages the whole 'new photo' procedure 
     addNewPhoto = async (photoData) => {
         try {
             const newPhotoData = await this.addPhotoToUploads(photoData);
@@ -63,27 +67,27 @@ class PhotosService {
             }
             return false;
         } catch (error) {
-            console.log(error.message);
             throw error;
         }
     }
 
     getAllPhotos = async () => {
-        let fileData = undefined;
+        let photosJson = undefined;
         try {
-            fileData = JSON.parse(await filesService.readFileAsync(this.PHOTOS_PATH));
-            fileData.photos = await this.convertPathToBase64(fileData.photos);
-            return fileData.photos;
+            photosJson = await this.readPhotosJson();
+            // Convert photo.src (currently holds the image's path) to base64.
+            return await this.convertPathToBase64(photosJson);
         } catch (error) {
             // Will be undefined if the file is empty, with no basic JSON template.
-            if (fileData === undefined) {
-                await filesService.writeToJsonFileAsync(this.PHOTOS_PATH, JSON.parse(`{"photos": []}`));
+            if (!photosJson) {
+                await filesService.writeToJsonFileAsync(this.PHOTOS_PATH, JSON.parse("[]"));
             }
             throw error;
         }
     }
 
     convertPathToBase64 = async (jsonFileData) => {
+        // Convert photo.src (currently path to image) to base64. 
         try {
             const promises = jsonFileData.map(async photo => {
                 let bufResult = await filesService.readImageAsync(photo.src);
@@ -100,10 +104,11 @@ class PhotosService {
     updatePhoto = async (updatedPhoto, fileName) => {
         try {
             // Check if file exists and and get it.
-            const fileData = JSON.parse(await filesService.readFileAsync(this.PHOTOS_PATH));
+            const photosJson = await this.readPhotosJson();
             const existingPath = path.join(this.UPLOADS_PATH, `${fileName}.png`);
-            const existingPhoto = fileData.photos.find(photo => photo.src === existingPath)
+            const existingPhoto = photosJson.find(photo => photo.src === existingPath)
 
+            // If photo not found.
             if (!existingPhoto) {
                 throw new Error(`Image ${existingPath} not found.`);
             }
@@ -118,12 +123,16 @@ class PhotosService {
             }
 
             // Update the photos json array and re-write it.
-            const photoIndex = fileData.photos.indexOf(existingPhoto);
-            fileData.photos.splice(photoIndex, 1, updatedPhoto);
-            return await filesService.writeToJsonFileAsync(this.PHOTOS_PATH, fileData);
+            const photoIndex = photosJson.indexOf(existingPhoto);
+            photosJson.splice(photoIndex, 1, updatedPhoto); // Replace the found object with the updatedPhoto.
+            return await filesService.writeToJsonFileAsync(this.PHOTOS_PATH, photosJson);
         } catch (error) {
             throw error;
         }
+    }
+
+    readPhotosJson = async () => {
+        return JSON.parse(await filesService.readFileAsync(this.PHOTOS_PATH));
     }
 }
 

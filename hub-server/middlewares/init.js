@@ -3,7 +3,7 @@ const router = express.Router();
 const configService = require('../services/configService');
 const photosService = require('../services/photosService');
 
-// Initializations
+// Files initializations
 configService.initSystemFiles();
 photosService.initPhotosFile();
 

@@ -5,7 +5,7 @@ class FilesService {
 
     createNewDirAsync = (dirPath) => {
         try {
-            return new Promise(async (res, rej) => {
+            return new Promise(async (res) => {
                 if (!await this.isFileExistAsync(dirPath)) {
                     fs.mkdir(path.join(dirPath), (err) => {
                         return res(err ? false : true);
@@ -20,7 +20,7 @@ class FilesService {
 
     createNewFileAsync = (filePath) => {
         try {
-            return new Promise(async (res, rej) => {
+            return new Promise(async (res) => {
                 if (!await this.isFileExistAsync(filePath)) {
                     fs.open(path.join(filePath), "w", async (err) => {
                         return res(err ? false : true);
@@ -35,7 +35,7 @@ class FilesService {
 
     isFileExistAsync = (filePath) => {
         try {
-            return new Promise((res, rej) => {
+            return new Promise((res) => {
                 fs.access(path.join(filePath), (err) => {
                     return res(err ? false : true);
                 });
@@ -45,6 +45,7 @@ class FilesService {
         }
     }
 
+    // Read file (string encoding)
     readFileAsync = (filePath) => {
         try {
             return new Promise(async (res, rej) => {
@@ -62,6 +63,7 @@ class FilesService {
         }
     }
 
+    // Read image file (binary encoding)
     readImageAsync = (imagePath) => {
         try {
             return new Promise(async (res, rej) => {
@@ -114,7 +116,7 @@ class FilesService {
         try {
             return new Promise((res, rej) => {
                 // Convert data to JSON.
-                let jsonContent = JSON.stringify(data);
+                const jsonContent = JSON.stringify(data);
                 fs.writeFile(filePath, jsonContent, (err) => {
                     return err ? rej(err) : res(true);
                 })

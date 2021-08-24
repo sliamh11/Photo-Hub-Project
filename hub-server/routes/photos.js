@@ -15,8 +15,8 @@ router.get("/", async (req, res) => {
 // Add a new photo to the library.
 router.post("/", async (req, res) => {
     try {
+        // Validate photo data.
         const { error } = validatePhoto(req.body);
-        // Validation error.
         if (error) {
             return res.status(400).send(error.details[0].message);
         }
@@ -37,14 +37,13 @@ router.put("/", async (req, res) => {
     try {
         const { updatedPhoto, fileName } = req.body;
 
+        // Validate photo data.
         const { error } = validatePhoto(updatedPhoto);
-        // Validation error.
         if (error) {
             return res.status(400).send(error.details[0].message);
         }
-        
-        const result = await photosService.updatePhoto(updatedPhoto, fileName);
-        return res.send(result);
+
+        return res.send(await photosService.updatePhoto(updatedPhoto, fileName));
     } catch (error) {
         res.status(400).send(error.message);
     }

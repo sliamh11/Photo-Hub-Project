@@ -58,17 +58,6 @@ export class ConfigService {
     }
   }
 
-  checkPasswordsMatch = async (password: string) => {
-    try {
-      const data = {
-        password: password
-      }
-      return await this.httpClient.post(`${this.CONFIG_URL}/private-mode`, data).toPromise();
-    } catch (error) {
-      throw this.errorService.handleError(error);
-    }
-  }
-
   getSelectedView = async () => {
     try {
       return await this.httpClient.get<IView>(`${this.CONFIG_URL}/views/selected-view`).toPromise();
@@ -110,6 +99,17 @@ export class ConfigService {
         return true;
       }
       return false;
+    } catch (error) {
+      throw this.errorService.handleError(error);
+    }
+  }
+
+  checkPasswordsMatch = async (password: string) => {
+    try {
+      const data = {
+        password: password
+      }
+      return await this.httpClient.post(`${this.CONFIG_URL}/match-passwords`, data).toPromise();
     } catch (error) {
       throw this.errorService.handleError(error);
     }

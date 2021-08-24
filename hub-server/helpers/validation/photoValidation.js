@@ -1,5 +1,6 @@
 const Joi = require('joi');
 
+// Photo object validation
 const schema = Joi.object({
     src: Joi.string().required(),
     caption: Joi.string().min(1).allow(null),

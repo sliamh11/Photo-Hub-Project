@@ -1,5 +1,6 @@
 const Joi = require('joi');
 
+// Config object validation
 const schema = Joi.object({
     selectedView: {
         id: Joi.number().required(),
